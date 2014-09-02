@@ -5,5 +5,18 @@ app = Flask(__name__)
 def index():
     return render_template("index.html")
 
+@app.route("/info")
+def info():
+    return render_template("about.html")
+
+@app.route("/prices")
+def prices():
+    return render_template("prices.html")
+
+@app.route("/contact")
+def contact():
+    return render_template("contact.html")
+
+
 if __name__ == "__main__":
     app.run(debug=True)
