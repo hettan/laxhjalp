@@ -70,7 +70,14 @@ def admin():
             return render_body_wrapper("admin.html")
 
     return page_not_found()
-            
+
+@app.route("/settings")
+def settings():
+    user = get_user()
+    if len(user) > 0:
+        return render_body_wrapper("settings.html")
+
+    return page_not_found()
     
 
 if __name__ == "__main__":

@@ -63,7 +63,7 @@
                 <li {% if nav == "contact" %}
                     class="active"
                     {% endif %}
-                   >
+                    >
                   <a href="/contact">Kontakt</a>
                 </li>
                 {% if user|length > 0 %}
@@ -83,51 +83,60 @@
                   </ul>
                 </li>
                 {% endif  %}
-              </ul>
-              <ul class="nav navbar-nav navbar-right" 
+                </ul>
+                <ul class="nav navbar-nav navbar-right" 
                   style="margin-right:10px;">
-                <li>
                   {% if user|length == 0 %}
-                  <div id="login_field" class="navbar-form navbar-right">
-                    <div class="form-group">
-                      <input id="user_input" type="text"
+                  <li>
+                    <div id="login_field" class="navbar-form navbar-right">
+                      <div class="form-group">
+                        <input id="user_input" type="text"
                              placeholder="Användarnamn" class="form-control">
+                      </div>
+                      <div class="form-group">
+                        <input id="passw_input" type="password"
+                               placeholder="Lösenord" class="form-control">
+                      </div>
+                      <button id="login_btn" class="btn btn-success">
+                        Logga in
+                      </button>
                     </div>
-                    <div class="form-group">
-                      <input id="passw_input" type="password"
-                             placeholder="Lösenord" class="form-control">
-                    </div>
-                    <button id="login_btn" class="btn btn-success">
-                      Logga in
-                    </button>
-                  </div>
+                  </li>
                   {% else %}
-                  <div id="logged_in_field" class="navbar-form navbar-right">
-                   
-                    <div class="form-group" >
-                      <p id="user_display" 
-                         style="margin: 0 auto;margin-right:10px;">
-                        {{user}}
-                      </p>
-                    </div>
+                  <li>
+                    <p id="user_display" 
+                         style="margin-top:15px;margin-right:10px;">
+                      {{user}}
+                    </p>
+                  </li>
+                  <li
+                     {% if nav == "settings" %}
+                     class="active"
+                     {% endif %}
+                     >
+                    <a href="/settings">
+                      <img style="max-width:78%;max-height:78%"
+                         src="static/img/glyphicons_280_settings.png">
+                    </a>
+                  </li>
+                  <li style="margin-top:7px;">
                     <button id="logout_btn" type="submit" 
                             class="btn btn-success">
                       Logga ut
                     </button>
-                  </div>
-                  {% endif %}
-                  <p id="wrong_login"
-                     style="float:right;margin-top:15px;color:red;display:none;">
-                    Fel användarnamn eller lösenord!
-                  </p>
-                </li>
-              </ul>
-            </div>
+                    {% endif %}
+                    <p id="wrong_login"
+                       style="float:right;margin-top:15px;color:red;display:none;">
+                      Fel användarnamn eller lösenord!
+                    </p>
+                  </li>
+                </ul>
+             </div>
           </div>
-        </div>
-      </div>
-    </div>
-    
+       </div> 
+     </div>
+  </div>   
+    <script src="static/js/jquery.min.js"></script>
     {% block body %}
     {% endblock %}
 
@@ -140,7 +149,6 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="static/js/jquery.min.js"></script>
     <script src="static/js/bootstrap.min.js"></script>
     <script src="static/js/docs.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
