@@ -12,21 +12,27 @@ def get_user():
         user = session["username"]
     return user
 
+def render_body_wrapper(child_page, args=None):
+    user = get_user()
+    admin = is_admin(user)
+
+    return render_template(child_page, user=user, admin=admin)
+
 @app.route("/")
 def index():
-    return render_template("index.html", user=get_user())
+    return render_body_wrapper("index.html")
 
 @app.route("/info")
 def info():
-    return render_template("about.html", user=get_user())
+    return render_body_wrapper("about.html")
 
 @app.route("/prices")
 def prices():
-    return render_template("prices.html", user=get_user())
+    return render_body_wrapper("prices.html")
 
 @app.route("/contact")
 def contact():
-    return render_template("contact.html", user=get_user())
+    return render_body_wrapper("contact.html")
 
 def check_login(user, passw):
     return user == "admin" and passw == "admin"
@@ -48,6 +54,24 @@ def login():
 def logout():
     session.pop("username")
     return " "
+
+def is_admin(user):
+    return len(user) > 0
+
+@app.errorhandler(404)
+def page_not_found(e=None):
+    return render_template("404.html"), 404
+
+@app.route("/admin")
+def admin():
+    user = get_user()
+    if len(user) > 0:
+        if(is_admin(user)):
+            return render_body_wrapper("admin.html")
+
+    return page_not_found()
+            
+    
 
 if __name__ == "__main__":
     server_host = "0.0.0.0"

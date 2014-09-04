@@ -1,22 +1,28 @@
 $(document).ready(function() {
-    $("#logged_in_field").hide();
-    $("#wrong_login").hide();
-    $('input[type="submit"]').attr('disabled','disabled');
-    
+    if($("#admin_nav").length > 0) {
+        $("#admin_nav").click( function() {
+            if(!$(this).hasClass("active")) {
+                $("#nav_option li").each( function() {
+                    $(this).removeClass("active");
+                });
+            }
+            else {
+                $(this).addClass("active");
+            }
+        });
+    }
+
     if($("#login_field").length > 0) {
         $("#login_btn").click( function() {
             var user = $("#user_input").val();
             var passw = $("#passw_input").val();
             
             $.post("/login", {"user":user, "passw":passw}, function(data) {
-                if (data == "True") {
-                    $("#wrong_login").remove();
-                    $("#login_field").remove();
-                    $("#logged_in_field").show();
-                    $("#user_display").html(user);
+                if (data != "True") {
+                    $("#wrong_login").show();
                 }
                 else {
-                    $("#wrong_login").show();
+                    location.reload(true);
                 }
             });
         });

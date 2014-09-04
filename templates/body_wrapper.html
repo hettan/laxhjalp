@@ -66,6 +66,23 @@
                    >
                   <a href="/contact">Kontakt</a>
                 </li>
+                {% if user|length > 0 %}
+                <li id="admin_nav" class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    Administratör 
+                    <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Lägg till video</a></li>
+                    <li class="divider"></li>
+                    <li class="dropdown-header">Ändra</li>
+                    <li><a href="#">Startsida</a></li>
+                    <li><a href="#">Info</a></li>
+                    <li><a href="#">Priser</a></li>
+                    <li><a href="#">Kontakt</a></li>
+                  </ul>
+                </li>
+                {% endif  %}
               </ul>
               <ul class="nav navbar-nav navbar-right" 
                   style="margin-right:10px;">
@@ -73,30 +90,34 @@
                   {% if user|length == 0 %}
                   <div id="login_field" class="navbar-form navbar-right">
                     <div class="form-group">
-                      <input id="user_input" type="text" placeholder="Användarnamn" class="form-control">
+                      <input id="user_input" type="text"
+                             placeholder="Användarnamn" class="form-control">
                     </div>
                     <div class="form-group">
-                      <input id="passw_input" type="password" placeholder="Lösenord" class="form-control">
+                      <input id="passw_input" type="password"
+                             placeholder="Lösenord" class="form-control">
                     </div>
                     <button id="login_btn" class="btn btn-success">
                       Logga in
                     </button>
                   </div>
-                  
-                  {% endif %}
+                  {% else %}
                   <div id="logged_in_field" class="navbar-form navbar-right">
                    
                     <div class="form-group" >
-                      <p id="user_display" style="margin: 0 auto;margin-right:10px;">
+                      <p id="user_display" 
+                         style="margin: 0 auto;margin-right:10px;">
                         {{user}}
                       </p>
                     </div>
-                    <button id="logout_btn" type="submit" class="btn btn-success">
+                    <button id="logout_btn" type="submit" 
+                            class="btn btn-success">
                       Logga ut
                     </button>
                   </div>
+                  {% endif %}
                   <p id="wrong_login"
-                       style="float:right;margin-top:15px;color:red;">
+                     style="float:right;margin-top:15px;color:red;display:none;">
                     Fel användarnamn eller lösenord!
                   </p>
                 </li>
