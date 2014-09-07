@@ -1,7 +1,13 @@
+from passlib.apps import custom_app_context as pwd_context
+
+from database_handler import DatabaseHandler
+
 class Profile():    
+    
     def __init__(self, email, password, first_name, last_name):
         self.email = email
-        self.password = password
+        self.password_not_hashed = password
+        self.password = DatabaseHandler.password_hash(password)
         self.first_name = first_name
         self.last_name = last_name
 

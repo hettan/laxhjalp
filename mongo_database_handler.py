@@ -14,10 +14,17 @@ class MongoDatabaseHandler(DatabaseHandler):
     def clear_all(self):
         self.clear_profiles()
 
-    def add_profile(self, profile):
-        self.db.profiles.insert(profile.get_data())
-        return True
+    def email_unique(self, email):
+        return self.db.profiles.find({"email":email}).count() == 0
 
+    def add_profile(self, profile):
+        if self.email_unique(profile.email):
+            self.db.profiles.insert(profile.get_data())
+            return True
+        else:
+            print "Email is already registered"
+            return False
+        
     def rem_profile(self, email):
         self.db.profiles.remove({"email":email})
         return True
@@ -25,15 +32,17 @@ class MongoDatabaseHandler(DatabaseHandler):
     def get_profile_data(self, email):
         return self.db.profiles.find_one({"email":email})
 
-    def password_correct(self, email, password):
-        return True
+    def get_password(self, email):
+        profile = self.db.profiles.find_one({"email":email})
+        return profile["password"]
 
     def change_profile(self, email, field, value):
-        print "{'email': %s}, {'$set': {%s: %s}}"%(email, field, value)
         self.db.profiles.update({"email": email}, {"$set": {field: value}})
         return True
 
     def change_address(self, email, field, value):
+        self.db.profiles.update({"email": email},
+                                {"$set": {"address."+field: value}})
         return True
 
     def get_all_profiles(self):
