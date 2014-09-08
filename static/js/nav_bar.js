@@ -1,3 +1,18 @@
+function register_dialog() { 
+    BootstrapDialog.show({
+        title: "Registrering",
+        message: function(dialog) {
+            var $message = $('<div></div>');
+            var pageToLoad = dialog.getData('pageToLoad');
+            $message.load(pageToLoad);
+            return $message;
+        },
+        data: {
+            'pageToLoad': '/register_dialog'
+        }
+    });
+}
+
 $(document).ready(function() {
     if($("#admin_nav").length > 0) {
         $("#admin_nav").click( function() {
@@ -11,7 +26,7 @@ $(document).ready(function() {
             }
         });
     }
-
+    
     if($("#login_field").length > 0) {
         $("#login_btn").click( function() {
             var user = $("#user_input").val();
@@ -36,4 +51,6 @@ $(document).ready(function() {
             location.reload(true);
         });
     });
+
+   $(".register_click").click(register_dialog);
 });

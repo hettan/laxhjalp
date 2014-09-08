@@ -34,7 +34,11 @@ class MongoDatabaseHandler(DatabaseHandler):
 
     def get_password(self, email):
         profile = self.db.profiles.find_one({"email":email})
-        return profile["password"]
+
+        if profile:
+            return profile["password"]
+        else:
+            return None
 
     def change_profile(self, email, field, value):
         self.db.profiles.update({"email": email}, {"$set": {field: value}})

@@ -31,8 +31,10 @@ class DatabaseHandler():
         
     def password_correct(self, email, password):
         password_hash = self.get_password(email)
-        return pwd_context.verify(password, password_hash)
-
+        if password_hash:
+            return pwd_context.verify(password, password_hash)
+        return False
+            
     def change_profile(self, email, field, value):
         return False
 

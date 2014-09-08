@@ -1,7 +1,12 @@
-from flask import Flask, render_template, request, session
-app = Flask(__name__)
+from flask import Flask, render_template, request, session, redirect
 
+from mongo_database_handler import MongoDatabaseHandler
+from profile import Profile
+ 
+app = Flask(__name__)
 app.secret_key = 'lkfu5yDAS3dG2866645534sfsdfqFE13'
+
+db = MongoDatabaseHandler()
 
 def logged_in():
     return "username" in session
@@ -17,6 +22,12 @@ def render_body_wrapper(child_page, args=None):
     admin = is_admin(user)
 
     return render_template(child_page, user=user, admin=admin)
+
+def body_wrapper_message(msg):
+    user = get_user()
+    admin = is_admin(user)
+    
+    return render_template("message.html", msg=msg, user=user, admin=admin)
 
 @app.route("/")
 def index():
@@ -34,7 +45,38 @@ def prices():
 def contact():
     return render_body_wrapper("contact.html")
 
-def check_login(user, passw):
+@app.route("/register_dialog")
+def register_dialog():
+    return render_template("register.html")
+
+@app.route("/interest", methods=["POST"])
+def interest():
+    email = request.form["email"]
+    name = request.form["name"]
+    phone = request.form["phone"]
+    help_with = request.form["message"]
+    start_date = request.form["start_date"]
+    #insert info a new mongodb collection interests
+    return redirect("/", code=302)
+
+@app.route("/register", methods=["POST"])
+def register():
+    email = request.form["email"]
+    password = request.form["password"]
+    first_name = request.form["first_name"]
+    last_name = request.form["last_name"]
+    #return "%s %s %s %s"%(email,password,first_name,last_name)
+    profile = Profile(email, password, first_name, last_name)
+    if db.add_profile(profile):
+        session["username"] = profile.email
+        
+        msg = "Registrering klar!"
+    else:
+        msg = "Registreringen misslyckades, var god fk igen."
+    return redirect("/", code=302)
+    
+def check_login(email, passw):
+    return db.password_correct(email, passw)
     return user == "admin" and passw == "admin"
 
 @app.route("/login", methods=["POST"])
@@ -61,6 +103,10 @@ def is_admin(user):
 @app.errorhandler(404)
 def page_not_found(e=None):
     return render_template("404.html"), 404
+
+@app.route("/reset")
+def reset(email):
+    return "RESET %s" % email
 
 @app.route("/admin")
 def admin():

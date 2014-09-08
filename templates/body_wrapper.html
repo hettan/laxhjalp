@@ -13,7 +13,8 @@
 
     <!-- Bootstrap core CSS -->
     <link href="static/css/bootstrap.min.css" rel="stylesheet">
-    
+    <link href="static/css/bootstrap-dialog.min.css" rel="stylesheet"
+          type="text/css" />
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="static/js/ie-emulation-modes-warning.js"></script>
@@ -38,7 +39,10 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="/">Räkna med Christin</a>
+           
+              <a class="nav" href="/">
+                <img src="/static/img/logo_min.png" height="50px">
+              </a>
             </div>
             <div class="navbar-collapse collapse">
               <ul id="nav_option" class="nav navbar-nav navbar-left">
@@ -83,103 +87,107 @@
                   </ul>
                 </li>
                 {% endif  %}
-                </ul>
-                <ul class="nav navbar-nav navbar-right" 
+              </ul>
+              <ul class="nav navbar-nav navbar-right" 
                   style="margin-right:10px;">
-                  {% if user|length == 0 %}
-                  <li>
-                    <div id="login_field" class="navbar-form navbar-right">
-                      <div class="form-group">
-                        <input id="user_input" type="text"
+                {% if user|length == 0 %}
+                <li>
+                  <div id="login_field" class="navbar-form navbar-right">
+                    <div class="form-group">
+                      <input id="user_input" type="text"
                              placeholder="Användarnamn" class="form-control">
-                      </div>
-                      <div class="form-group">
-                        <input id="passw_input" type="password"
-                               placeholder="Lösenord" class="form-control">
-                      </div>
-                      <button id="login_btn" class="btn btn-success">
-                        Logga in
-                      </button>
                     </div>
-                  </li>
-                  {% else %}
-                  <li>
-                    <p id="user_display" 
-                         style="margin-top:15px;margin-right:10px;">
-                      {{user}}
-                    </p>
-                  </li>
-                  <li
-                     {% if nav == "settings" %}
-                     class="active"
-                     {% endif %}
-                     >
-                    <a href="/settings">
-                      <img style="max-width:78%;max-height:78%"
-                         src="static/img/glyphicons_280_settings.png">
-                    </a>
-                  </li>
-                  <li style="margin-top:7px;margin-left:10px;">
-                    <button id="logout_btn" type="submit" 
-                            class="btn btn-success">
-                      Logga ut
+                    <div class="form-group">
+                      <input id="passw_input" type="password"
+                             placeholder="Lösenord" class="form-control">
+                    </div>
+                    <button id="login_btn" class="btn btn-success">
+                      Logga in
                     </button>
-                    {% endif %}
-                    <p id="wrong_login"
-                       style="float:right;margin-top:15px;color:red;display:none;">
-                      Fel användarnamn eller lösenord!
-                    </p>
-                  </li>
-                </ul>
-             </div>
-          </div>
+                    <!--<button class="btn btn-primary register_click" 
+                            style="margin-left:5px;">
+                      Registrera
+                    </button>-->
+                  </div>
+                </li>
+                {% else %}
+                <li>
+                  <p id="user_display" 
+                     style="margin-top:15px;margin-right:10px;">
+                    {{user}}
+                  </p>
+                </li>
+                <li
+                   {% if nav == "settings" %}
+                   class="active"
+                   {% endif %}
+                   >
+                  <a href="/settings">
+                    <img style="max-width:78%;max-height:78%"
+                         src="static/img/glyphicons_280_settings.png">
+                  </a>
+                </li>
+                <li style="margin-top:7px;margin-left:10px;">
+                  <button id="logout_btn" type="submit" 
+                          class="btn btn-success">
+                    Logga ut
+                  </button>
+                  {% endif %}
+                  <p id="wrong_login"
+                     style="float:right;margin-top:15px;color:red;display:none;">
+                    Fel användarnamn eller lösenord!
+                  </p>
+                </li>
+              </ul>
+           </div>
+         </div>
        </div> 
      </div>
   </div>   
-    <script src="static/js/jquery.min.js"></script>
-    {% block body %}
-    {% endblock %}
+  <script src="static/js/jquery.min.js"></script>
+  {% block body %}
+  {% endblock %}
 
-    <!-- FOOTER -->
-      <footer style="margin-left:100px; margin-right:100px; margin-top:50px;">
-        <p class="pull-right"><a href="#">Till början</a></p>
-        <p>© 2014 Räkna med Christin</p>
-      </footer>
-         
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="static/js/bootstrap.min.js"></script>
-    <script src="static/js/docs.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="static/js/ie10-viewport-bug-workaround.js"></script>
-
-    <script src="static/js/nav_bar.js"></script>
-      
-    <div id="global-zeroclipboard-html-bridge"
-         class="global-zeroclipboard-container"
-         style="position: absolute; left: 0px; top: -9999px; width: 15px; height: 15px; z-index: 999999999;"
-         title="" data-original-title="Copy to clipboard">      
-      <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" id="global-zeroclipboard-flash-bridge" width="100%" height="100%">
-        <param name="movie" value="/static/flash/ZeroClipboard.swf?noCache=1409470907006">
-        <param name="allowScriptAccess" value="sameDomain">        
-        <param name="scale" value="exactfit">
-        <param name="loop" value="false">
-        <param name="menu" value="false">  
-        <param name="quality" value="best">
-        <param name="bgcolor" value="#ffffff">
-        <param name="wmode" value="transparent">
-        <param name="flashvars" value="trustedOrigins=getbootstrap.com%2C%2F%2Fgetbootstrap.com%2Chttp%3A%2F%2Fgetbootstrap.com">
-        <embed src="/static/flash/ZeroClipboard.swf?noCache=1409470907006"
-               loop="false" menu="false" quality="best" bgcolor="#ffffff"
-               width="100%" height="100%"
-               name="global-zeroclipboard-flash-bridge"
-               allowscriptaccess="sameDomain" allowfullscreen="false"
-               type="application/x-shockwave-flash" wmode="transparent"
-               pluginspage="http://www.macromedia.com/go/getflashplayer"
-               flashvars="trustedOrigins=getbootstrap.com%2C%2F%2Fgetbootstrap.com%2Chttp%3A%2F%2Fgetbootstrap.com"
-               scale="exactfit">
-      </object>
-    </div>
-  </body>
+  <!-- FOOTER -->
+  <footer style="margin-left:100px; margin-right:100px; margin-top:50px;">
+    <p class="pull-right"><a href="#">Till början</a></p>
+    <p>© 2014 Räkna med Christin</p>
+  </footer>
+  
+  <!-- Bootstrap core JavaScript
+       ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="static/js/bootstrap.min.js"></script>
+  <script src="static/js/docs.min.js"></script>
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <script src="static/js/ie10-viewport-bug-workaround.js"></script>
+  <script src="static/js/bootstrap-dialog.min.js"></script>
+  <script src="static/js/nav_bar.js"></script>
+  
+  <div id="global-zeroclipboard-html-bridge"
+       class="global-zeroclipboard-container"
+       style="position: absolute; left: 0px; top: -9999px; width: 15px; height: 15px; z-index: 999999999;"
+       title="" data-original-title="Copy to clipboard">      
+    <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" id="global-zeroclipboard-flash-bridge" width="100%" height="100%">
+      <param name="movie" value="/static/flash/ZeroClipboard.swf?noCache=1409470907006">
+      <param name="allowScriptAccess" value="sameDomain">        
+      <param name="scale" value="exactfit">
+      <param name="loop" value="false">
+      <param name="menu" value="false">  
+      <param name="quality" value="best">
+      <param name="bgcolor" value="#ffffff">
+      <param name="wmode" value="transparent">
+      <param name="flashvars" value="trustedOrigins=getbootstrap.com%2C%2F%2Fgetbootstrap.com%2Chttp%3A%2F%2Fgetbootstrap.com">
+      <embed src="/static/flash/ZeroClipboard.swf?noCache=1409470907006"
+             loop="false" menu="false" quality="best" bgcolor="#ffffff"
+             width="100%" height="100%"
+             name="global-zeroclipboard-flash-bridge"
+             allowscriptaccess="sameDomain" allowfullscreen="false"
+             type="application/x-shockwave-flash" wmode="transparent"
+             pluginspage="http://www.macromedia.com/go/getflashplayer"
+             flashvars="trustedOrigins=getbootstrap.com%2C%2F%2Fgetbootstrap.com%2Chttp%3A%2F%2Fgetbootstrap.com"
+             scale="exactfit">
+    </object>
+  </div>
+</body>
 </html>

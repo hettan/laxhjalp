@@ -14,6 +14,9 @@ class Profile():
         self.phone = ""
         self.admin = False
         self.address = {}
+        
+    def set_admin(self):
+        self.admin = True
 
     def add_phone(self, phone):
         self.phone = phone
@@ -32,6 +35,7 @@ class Profile():
         data["last_name"] = self.last_name
         data["phone"] = self.phone
         data["address"] = self.address
+        data["admin"] = self.admin
         return data
 
     @staticmethod
@@ -43,7 +47,11 @@ class Profile():
 
     @staticmethod
     def get_profile(data):
-        profile = Profile(data["email"], data["password"],
+        #password = ""
+        #if "password" in data.keys():
+        password = data["password"]
+        
+        profile = Profile(data["email"], password,
                           data["first_name"], data["last_name"])
         profile.add_phone(data["phone"])
         if data["address"]:
