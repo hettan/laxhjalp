@@ -45,6 +45,10 @@ def prices():
 def contact():
     return render_body_wrapper("contact.html")
 
+@app.route("/rut_info")
+def rut_info():
+    return render_body_wrapper("rut_info.html")
+
 @app.route("/register_dialog")
 def register_dialog():
     return render_template("register.html")
