@@ -1,7 +1,6 @@
 {% set nav = "home" %}
 {% extends "body_wrapper.html" %}
 {% block body %}
-
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
   <!-- Indicators -->
   <ol class="carousel-indicators">
@@ -11,8 +10,9 @@
   </ol>
   <div class="carousel-inner">
     <div class="item active">
-      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="First slide">
+
       <div class="container">
+	<img src="/static/img/IMG_1622.JPG" alt="First slide" class="img-responsive">
         <div class="carousel-caption">
           <h1>Räkna med Christin</h1>
           <p>
@@ -28,8 +28,8 @@
       </div>
     </div>
     <div class="item">
-      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAGZmZgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Second slide">
       <div class="container">
+	<img src="/static/img/IMG_1657.JPG" alt="Second slide" class="img-responsive">
         <div class="carousel-caption">
           <h1>Priser med RUT avdrag</h1>
           <p>Med RUT avdraget blir det billigare!</p>
@@ -42,9 +42,10 @@
       </div>
     </div>
     <div class="item">
-      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAFVVVQAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Third slide">
+      
       <div class="container">
-        <div class="carousel-caption">
+	<img src="/static/img/IMG_1677.JPG" alt="Third slide" class="img-responsive">
+	<div class="carousel-caption">
           <h1>Undervisning på dina vilkor!</h1>
           <p>
             Lugn miljö i Villa Holm eller hemma hos dig !
@@ -89,5 +90,11 @@
     </div>
   </div>
 </div>
+<script src="/static/js/carousel.js"></script>
+<!--<script>
+  $('.carousel').carousel({
+   interval: 10000
+  });
+ </script>-->   
   {% endblock %}
   
