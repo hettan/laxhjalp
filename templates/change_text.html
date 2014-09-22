@@ -1,0 +1,18 @@
+{% set nav =  "change_text" %}
+{% extends "body_wrapper.html" %}
+{% block body %}
+<div class="container">
+  <div class="row">
+  </div>
+  <div class="row" style="height:100px;">
+  </div>
+  <div class="row featurette">
+    <div class="col-md-7">
+      <h2>Ändra {{args['field']}}</h2>
+      <div>
+	<textarea col="4" rows="4" text="yoo"></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

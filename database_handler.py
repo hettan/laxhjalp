@@ -7,8 +7,12 @@ class DatabaseHandler():
     def clear_profiles(self):
         pass
 
-    def clear_all(self):
+    def clear_pages(self):
         pass
+
+    def clear_all(self):
+        self.clear_profiles()
+        self.clear_pages()
 
     def add_profile(self, email):
         return False
@@ -24,6 +28,31 @@ class DatabaseHandler():
 
     def get_password(self, email):
         return None
+
+    def add_page(self, name):
+        return None
+
+    def get_page(self, name):
+        return None
+
+    def add_field(self, page_name, field_name, value):
+        return None
+
+    def update_page(self, page_name, fields):
+        return None
+
+    def setup_pages(self):
+        self.add_page("startsida")
+        carousel = []
+        corousel.append({"header": "h1", "text": "texten1", "button":"button text1"})  
+        corousel.append({"header": "h2", "text": "texten2", "button":"button text2"})  
+        corousel.append({"header": "h2", "text": "texten3", "button":"button text3"})  
+        self.add_field("startsida", "carousel", carousel)
+        marketing = []
+        marketing.append({"header": "h1", "text": "marketing1", "button":"button text1"})
+        marketing.append({"header": "h2", "text": "marketing2", "button":"button text2"})
+        marketing.append({"header": "h3", "text": "marketing3", "button":"button text3"})
+        self.add_field("startsida", "marketing", marketing)
         
     @staticmethod
     def password_hash(password):

@@ -6,7 +6,7 @@ from profile import Profile
 class DatabaseTests(unittest.TestCase):
     def setUp(self):
         self.db = MongoDatabaseHandler()
-        self.db.clear_profiles()
+        self.db.clear_all()
         self.new_prof = Profile.dummy_profile()
         
     def test_add_profile(self):
@@ -38,14 +38,14 @@ class DatabaseTests(unittest.TestCase):
         
         self.assertNotEqual(Profile.get_profile(profile_data).address,
                             self.new_prof.address["road"])
-
+        """
     def test_rem_profile(self):
         self.test_add_profile()
 
         self.assertTrue(self.db.rem_profile(self.new_prof.email))
         profile_data = self.db.get_profile_data(self.new_prof.email)
         self.assertEqual(profile_data, None)
-
+        """
     def test_profile_password(self):
         self.test_add_profile()
 
@@ -59,7 +59,20 @@ class DatabaseTests(unittest.TestCase):
         self.assertTrue(self.db.password_correct(self.new_prof.email,
                                                  "new_password"))
     
-
+    def test_add_page(self):
+        page_name = "test"
+        self.assertTrue(self.db.add_page(page_name))
+    
+        field_name = "test_field"
+        field = {"header": "test", "text": "test", "button": "test"}
+        self.assertTrue(self.db.add_field(page_name, field_name, field))
+        
+        page = self.db.get_page(page_name)
+        self.assertEqual(page["name"], page_name)
+        self.assertEqual(page["fields"][0]["field"], field_name)
+        self.assertEqual(page["fields"][0]["data"]["header"], field["header"])
+    
+        
 if __name__ == "__main__":
     unittest.main()
 

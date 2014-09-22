@@ -21,7 +21,7 @@ def render_body_wrapper(child_page, args=None):
     user = get_user()
     admin = is_admin(user)
 
-    return render_template(child_page, user=user, admin=admin)
+    return render_template(child_page, user=user, admin=admin, args=args)
 
 def body_wrapper_message(msg):
     user = get_user()
@@ -80,8 +80,8 @@ def register():
     return redirect("/", code=302)
     
 def check_login(email, passw):
-    return db.password_correct(email, passw)
-    return user == "admin" and passw == "admin"
+#    return db.password_correct(email, passw)
+    return email == "admin" and passw == "admin"
 
 @app.route("/login", methods=["POST"])
 def login():
@@ -129,6 +129,17 @@ def settings():
 
     return page_not_found()
     
+@app.route("/edit_text", methods=["GET"])
+def edit_text():
+    field = request.args.get("field")
+    user = get_user()
+    if(is_admin(user)):
+        args = {}
+        args["field"] = field
+        return render_body_wrapper("change_text.html", args)
+    else:
+        return page_not_found()
+
 
 if __name__ == "__main__":
     server_host = "0.0.0.0"

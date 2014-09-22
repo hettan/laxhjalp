@@ -10,10 +10,10 @@ class MongoDatabaseHandler(DatabaseHandler):
     
     def clear_profiles(self):
         self.db.drop_collection("profiles")
-    
-    def clear_all(self):
-        self.clear_profiles()
 
+    def clear_pages(self):
+        self.db.drop_collection("pages")
+    
     def email_unique(self, email):
         return self.db.profiles.find({"email":email}).count() == 0
 
@@ -51,3 +51,22 @@ class MongoDatabaseHandler(DatabaseHandler):
 
     def get_all_profiles(self):
         return self.db.profiles.find()
+
+    def add_page(self, name):
+        page = {"name": name, "fields": []}
+        self.db.pages.insert(page)
+        return True
+
+    def get_page(self, name):
+        return self.db.pages.find_one({"name": name})
+
+    def add_field(self, page_name, field_name, value):
+        new_field = {"field": field_name, "data": value}
+        self.db.pages.update({"name": page_name},
+                             {"$push": {"fields": new_field}})
+        return True
+        
+    def update_page(self, page_name, fields):
+        self.db.pages.update({"name": page_name},
+                             {"$set": {"fields": fields}})
+        return True
