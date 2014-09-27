@@ -13,7 +13,7 @@ class MongoDatabaseHandler(DatabaseHandler):
 
     def clear_pages(self):
         self.db.drop_collection("pages")
-    
+
     def email_unique(self, email):
         return self.db.profiles.find({"email":email}).count() == 0
 
@@ -28,6 +28,14 @@ class MongoDatabaseHandler(DatabaseHandler):
     def rem_profile(self, email):
         self.db.profiles.remove({"email":email})
         return True
+
+    def get_all_profiles(self):
+        return self.db.profiles.find()
+        """profiles = []
+        for profile in self.db.profiles.find():
+            profiles.add(profile)
+        return profiles"""
+
 
     def get_profile_data(self, email):
         return self.db.profiles.find_one({"email":email})

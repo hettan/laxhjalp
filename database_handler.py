@@ -23,6 +23,9 @@ class DatabaseHandler():
     def get_profile_data(self, email):
         return None
 
+    def get_all_profiles(self):
+        return None
+
     def email_unique(self, email):
         return False
 

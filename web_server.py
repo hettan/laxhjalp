@@ -121,6 +121,16 @@ def admin():
 
     return page_not_found()
 
+@app.route("/show_profile/<user>")
+def show_profile(user):
+    user_logged_in = get_user()
+    if is_admin(user_logged_in):
+        args = {}
+        args["profile"] = db.get_profile_data(user)
+        return render_body_wrapper("edit_profile.html", args)
+    else:
+        return page_not_found()
+
 @app.route("/settings")
 def settings():
     user = get_user()
@@ -131,14 +141,39 @@ def settings():
     
 @app.route("/edit_text", methods=["GET"])
 def edit_text():
-    field = request.args.get("field")
+    page_name = request.args.get("page")
     user = get_user()
     if(is_admin(user)):
         args = {}
-        args["field"] = field
+        args["page"] = page_name
         return render_body_wrapper("change_text.html", args)
     else:
         return page_not_found()
+
+@app.route("/users")
+def users():
+    for profile in Profile.dummy_profiles():
+        db.add_profile(profile)
+    user = get_user()
+    if(is_admin(user)):
+        args = {}
+        args["users"] = db.get_all_profiles()
+        return render_body_wrapper("users.html", args)
+    else:
+        return page_not_found()
+
+@app.route("/edit_profile", methods=["GET"])
+def edit_profile():
+    email = request.args.get("email")
+    field = request.args.get("field").strip()
+    value = request.args.get("value")
+    
+    user = get_user()
+    if(email == user or is_admin(user)):
+        if db.change_profile(email, field, value):
+            return "True"
+        else:
+            return "False"
 
 
 if __name__ == "__main__":

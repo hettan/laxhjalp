@@ -46,6 +46,24 @@ class Profile():
         return profile
 
     @staticmethod
+    def dummy_profiles():
+        profile1 = Profile("johndoe1@foo.bar", "123", "John","Doe")
+        profile1.add_phone(0701010101)
+        profile1.add_address("Yoloroad", 1, 13337,"Smallville")
+        profile2 = Profile("johndoe2@foo.bar", "123", "John","Doe")
+        profile2.add_phone(0701010101)
+        profile2.add_address("Yoloroad", 1, 13337,"Smallville")
+        profile3 = Profile("johndoe3@foo.bar", "123", "John","Doe")
+        profile3.add_phone(0701010101)
+        profile3.add_address("Yoloroad", 1, 13337,"Smallville")
+        
+        profiles = []
+        profiles.append(profile1)
+        profiles.append(profile2)
+        profiles.append(profile3)
+        return profiles
+
+    @staticmethod
     def get_profile(data):
         #password = ""
         #if "password" in data.keys():

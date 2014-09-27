@@ -38,14 +38,14 @@ class DatabaseTests(unittest.TestCase):
         
         self.assertNotEqual(Profile.get_profile(profile_data).address,
                             self.new_prof.address["road"])
-        """
+        
     def test_rem_profile(self):
         self.test_add_profile()
 
         self.assertTrue(self.db.rem_profile(self.new_prof.email))
         profile_data = self.db.get_profile_data(self.new_prof.email)
         self.assertEqual(profile_data, None)
-        """
+        
     def test_profile_password(self):
         self.test_add_profile()
 
@@ -59,6 +59,14 @@ class DatabaseTests(unittest.TestCase):
         self.assertTrue(self.db.password_correct(self.new_prof.email,
                                                  "new_password"))
     
+
+    def test_get_all_profiles(self):
+        profiles = Profile.dummy_profiles()
+        for profile in profiles:
+            self.assertTrue(self.db.add_profile(profile))
+
+        self.assertEqual(self.db.get_all_profiles().count(), len(profiles))    
+
     def test_add_page(self):
         page_name = "test"
         self.assertTrue(self.db.add_page(page_name))
