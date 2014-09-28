@@ -1,0 +1,50 @@
+[1mdiff --git a/static/js/settings.js b/static/js/settings.js[m
+[1mindex 8e02a82..20f0016 100644[m
+[1m--- a/static/js/settings.js[m
+[1m+++ b/static/js/settings.js[m
+[36m@@ -1,32 +1,16 @@[m
+ $(document).ready( function() {[m
+[31m-    $(".setting_field").each( function() {[m
+[31m-        var field = $(this);[m
+[31m-        var lbl = $("#lbl_field", field); [m
+[31m-        var input = $("#txt_field", field); [m
+[31m-        $("#btn_edit",this).click( function() {[m
+[31m-            if(lbl.is(":visible")) {[m
+[31m-                lbl.hide();[m
+[31m-                input.show();[m
+[31m-                input.focus();[m
+[31m-                $("img",this).attr("src",[m
+[31m-                                        "/static/img/glyphicons_206_ok_2.png");[m
+[31m-            }[m
+[31m-            else {[m
+[31m-                $(this).prop("disabled", true);[m
+[31m-                $.get("/edit_profile?email=" + email[m
+[31m-                      +"&field=" + field + "&value=" + value,[m
+[31m-                      function(data) {[m
+[31m-                          alert(data);[m
+[31m-                          [m
+[31m-                          var value = input.val();[m
+[31m-                          input.hide();[m
+[31m-                          lbl.show();[m
+[31m-                          lbl.text(value);[m
+[31m-                          $("img",this).attr("src",[m
+[31m-                                             "/static/img/glyphicons_030_pencil.png");[m
+[31m-                          $(this).prop("disabled", false);[m
+[31m-                      });[m
+[31m-            }[m
+[31m-        });[m
+[32m+[m[32m    $(".btn_read").each( function() {[m
+[32m+[m[32m        var btn = $(this);[m
+[32m+[m[32m        var text = $(this).text();[m
+[32m+[m[32m        if(btn.hasClass("btn-success")) {[m
+[32m+[m[32m            btn.text("Oläst");[m
+[32m+[m[32m            btn.removeClass("btn-success");[m
+[32m+[m[32m            btn.addClass("btn-primary");[m
+[32m+[m[32m        }[m
+[32m+[m[32m        else {[m
+[32m+[m[32m            btn.text("Läst");[m
+[32m+[m[32m            btn.removeClass("btn-primary");[m
+[32m+[m[32m            btn.addClass("btn-success");[m
+[32m+[m[32m        }[m
+     });[m
+ });[m

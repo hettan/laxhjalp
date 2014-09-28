@@ -78,8 +78,25 @@ class DatabaseTests(unittest.TestCase):
         page = self.db.get_page(page_name)
         self.assertEqual(page["name"], page_name)
         self.assertEqual(page["fields"][0]["field"], field_name)
-        self.assertEqual(page["fields"][0]["data"]["header"], field["header"])
+        self.assertEqual(page["fields"][0]["data"]["header"],
+                         field["header"])
     
+    def test_interest(self):
+        dummy_interest = {}
+        dummy_interest["email"] = "interest@yo.yo"
+        dummy_interest["name"] = "Johnnny Doeyy"
+        dummy_interest["address"] = "address 1"
+        dummy_interest["phone"] = "0700311999"
+        dummy_interest["help_with"] = "help_with text"
+        dummy_interest["date"] = "2014-09-28"
+        
+        self.assertTrue(self.db.add_interest_data(dummy_interest))
+        interests = self.db.get_all_interests()
+        interests_unread = self.db.get_all_unread_interests()
+        self.assertEqual(interests.count(), 1)
+        self.assertEqual(interests.count(), 1)
+        interest = self.db.get_interest(interests[0]["_id"])
+        self.assertEqual(interest["email"], dummy_interest["email"])
         
 if __name__ == "__main__":
     unittest.main()

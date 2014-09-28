@@ -9,7 +9,7 @@ $(document).ready( function() {
                 input.show();
                 input.focus();
                 $("img",this).attr("src",
-                                        "/static/img/glyphicons_206_ok_2.png");
+                                   "/static/img/glyphicons_206_ok_2.png");
             }
             else {
                 $(this).prop("disabled", true);
@@ -17,7 +17,7 @@ $(document).ready( function() {
                       +"&field=" + field + "&value=" + value,
                       function(data) {
                           alert(data);
-                          
+
                           var value = input.val();
                           input.hide();
                           lbl.show();
@@ -25,7 +25,7 @@ $(document).ready( function() {
                           $("img",this).attr("src",
                                              "/static/img/glyphicons_030_pencil.png");
                           $(this).prop("disabled", false);
-                      });
+                      });    
             }
         });
     });

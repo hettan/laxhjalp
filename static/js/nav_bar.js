@@ -1,6 +1,6 @@
 function register_dialog() { 
     BootstrapDialog.show({
-        title: "Registrering",
+        title: "Intresseanmälan",
         message: function(dialog) {
             var $message = $('<div></div>');
             var pageToLoad = dialog.getData('pageToLoad');
@@ -8,7 +8,7 @@ function register_dialog() {
             return $message;
         },
         data: {
-            'pageToLoad': '/register_dialog'
+            'pageToLoad': '/interest_dialog'
         }
     });
 }

@@ -9,11 +9,15 @@ class DatabaseHandler():
 
     def clear_pages(self):
         pass
+    
+    def clear_interests(self):
+        pass
 
     def clear_all(self):
         self.clear_profiles()
         self.clear_pages()
-
+        self.clear_interests()
+        
     def add_profile(self, email):
         return False
 
@@ -102,3 +106,29 @@ class DatabaseHandler():
 
     def change_address_city(self, email, city):
         return self.change_address(email, "city", city)
+    
+    def add_interest_data(self, data):
+        return False
+
+    def add_interest(self, email, name, address, phone, help_with, start_date):
+        interest = {}
+        interest["email"] = email
+        interest["name"] = name
+        interest["address"] = address
+        interest["phone"] = phone
+        interest["help_with"] = help_with
+        interest["start_date"] = start_date
+        interest["read"] = False
+        return self.add_interest_data(interest)
+
+    def remove_interest(self, _id):
+        return False
+
+    def get_interest(self, _id):
+        return None
+
+    def get_all_interests(self):
+        return None
+
+    def get_all_unread_interests(self):
+        return None

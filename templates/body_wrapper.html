@@ -90,6 +90,18 @@
                 </li>
                 {% endif  %}
               </ul>
+              {% if admin %}
+              {% if args["unread_interest_count"] > 0 %}
+              <ul  class="nav navbar-nav navbar-center">
+                <li>
+                  <a href="/show_interests"> 
+                    <span class="glyphicon glyphicon-envelope"></span>
+                    {{args["unread_interest_count"]}}st olästa 
+                  </a>
+                </li>
+              </ul>
+              {% endif %}
+              {% endif %}
               <ul class="nav navbar-nav navbar-right" 
                   style="margin-right:10px;">
                 {% if user|length == 0 %}
