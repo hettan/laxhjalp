@@ -1,6 +1,6 @@
-{% macro add_field(fields) -%}
+{% macro add_field(fields, parent_field) -%}
 {% for key, value in fields.iteritems() %}
-{% if value is mapping %}
+{% if value is mapping and "type" in value.keys() %}
 <div class="row"> 
   {% set type = value["type"] %}
   <div class="form-group">
@@ -11,17 +11,19 @@
       {% elif type in ["small-text", "image"] %}
       <input class="form-control" type="text" name="{{key}}" style="width:200px;" value='{{value["value"]}}' />
       {% endif %}
-      <button class="btn btn-primary" style="position:absolute;bottom:0;" >Spara</button>
+      <button class="btn btn-primary" style="position:absolute;bottom:0;" 
+	      onclick="update_field('{{args['page']['name']}}', '{{parent_field}}{{key}}', '{{value['value']}}')">
+	Spara
+      </button>
     </div>
   </div>
 </div>
 {% else %}
-{% for i in range(value|length) %}
-<h2>{{key}}: {{i}}</h3><br>
-<form role="form" class="form-inline">
-  {{ add_field(value[i]) }}
+<h2>{{key}}</h3><br>
+<form class="form-inline">
+  {% set parent_field = parent_field+key+"." %}
+  {{ add_field(value, parent_field) }}
 </form>
-{% endfor %}
 {% endif %}
 {% endfor %}
 {%- endmacro %}
@@ -37,7 +39,7 @@
   <div class="row featurette">
     <div class="col-md-12">
       <h1>Ändra {{args['page']['name']}}</h1>
-      {{ add_field(args['page']['fields']) }}
+      {{ add_field(args['page']['fields'], '') }}
       <button type="submit" class="btn btn-lg btn-primary pull-right">Spara</button>
     </div>
   </div>

@@ -10,6 +10,7 @@ db = MongoDatabaseHandler()
 db.clear_pages()
 db.setup_pages()
 db.setup_pages()
+
 def logged_in():
     return "username" in session
 
@@ -18,7 +19,7 @@ def get_user():
     if logged_in():
         user = session["username"]
     return user
-
+2
 def render_body_wrapper(child_page, args={}):
     user = get_user()
     admin = is_admin(user)
@@ -145,15 +146,16 @@ def edit_text():
 
 @app.route("/update_page", methods=["POST"])
 def update_page():
-    #page_name = request.form["page_name"]
-    #field = request.form["field_name"]
-    page_name = "startsida"
-    field = "carousel.first_slide.header"
-    value = "new value yolo"
+    page = request.form["page"]
+    field = request.form["field"]
+    value = request.form["value"]
+#    page_name = "startsida"
+ #   field = "carousel.first_slide.header"
+  #  value = "new value yolo"
 
     user = get_user()
     if(is_admin(user)):
-        if db.update_page_field(page_name, field, value):
+        if db.update_page_field(page, field, value):
             return "OK"
         else:
             return "ERROR"
