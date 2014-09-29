@@ -35,25 +35,30 @@ class DatabaseHandler():
     def get_page(self, name):
         return None
 
-    def add_field(self, page_name, field_name, value):
+    def add_field(self, page_name, field_name, field):
         return None
 
-    def update_page(self, page_name, fields):
+    def update_page_field(self, page_name, field_name, field):
+        return None
+
+    def update_page_fields(self, page_name, fields):
         return None
 
     def setup_pages(self):
         self.add_page("startsida")
         carousel = []
-        corousel.append({"header": "h1", "text": "texten1", "button":"button text1"})  
-        corousel.append({"header": "h2", "text": "texten2", "button":"button text2"})  
-        corousel.append({"header": "h2", "text": "texten3", "button":"button text3"})  
-        self.add_field("startsida", "carousel", carousel)
-        marketing = []
-        marketing.append({"header": "h1", "text": "marketing1", "button":"button text1"})
-        marketing.append({"header": "h2", "text": "marketing2", "button":"button text2"})
-        marketing.append({"header": "h3", "text": "marketing3", "button":"button text3"})
-        self.add_field("startsida", "marketing", marketing)
+        carousel.append({"header": {"type": "text", "value": "h1"}, "text": {"type": "text", "value": "texten1"},
+                         "button": {"type": "text", "value": "button text1"},
+                         "image": {"type": "image", "value": "/static/img/examle1.JPG"}})  
+        carousel.append({"header": {"type": "text", "value": "h2"}, "text": {"type": "text", "value": "texten2"},
+                         "button": {"type": "text", "value": "button text2"},
+                         "image": {"type": "image", "value": "/static/img/examle2.JPG"}})  
+        carousel.append({"header": {"type": "text", "value": "h3"}, "text": {"type": "text", "value": "texten3"},
+                         "button": {"type": "text", "value": "button text3"},
+                         "image": {"type": "image", "value": "/static/img/examle3.JPG"}})  
         
+        self.add_field("startsida", "carousel", carousel)
+                
     @staticmethod
     def password_hash(password):
         return pwd_context.encrypt(password)

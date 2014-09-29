@@ -1,3 +1,21 @@
+{% macro add_field(fields) -%}
+{{fields}}
+{% for key, value in fields.iteritems() %}
+{% if value is mapping %}
+<div>
+  <h3>{{key}}</h3><br>
+  <textarea col="4" rows="4" text="yoo"> {{value}}</textarea>
+</div>      
+{% else %}
+<h1>len={{value|length}}</h1>
+{% for i in range(value|length) %}
+<h2>{{key}}: {{i}}</h3><br>
+{{ add_field(value[i]) }}
+{% endfor %}
+{% endif %}
+{% endfor %}
+{%- endmacro %}
+
 {% set nav =  "change_text" %}
 {% extends "body_wrapper.html" %}
 {% block body %}
@@ -8,10 +26,8 @@
   </div>
   <div class="row featurette">
     <div class="col-md-7">
-      <h2>Ändra {{args['field']}}</h2>
-      <div>
-	<textarea col="4" rows="4" text="yoo"></textarea>
-      </div>
+      <h2>Ändra {{args['page']['name']}}</h2>
+      {{ add_field(args['page']['fields']) }}
     </div>
   </div>
 </div>

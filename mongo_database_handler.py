@@ -53,20 +53,25 @@ class MongoDatabaseHandler(DatabaseHandler):
         return self.db.profiles.find()
 
     def add_page(self, name):
-        page = {"name": name, "fields": []}
+        page = {"name": name, "fields": {}}
         self.db.pages.insert(page)
         return True
 
     def get_page(self, name):
         return self.db.pages.find_one({"name": name})
 
-    def add_field(self, page_name, field_name, value):
-        new_field = {"field": field_name, "data": value}
+    def add_field(self, page_name, field_name, field):
         self.db.pages.update({"name": page_name},
-                             {"$push": {"fields": new_field}})
+                             {"$set": {"fields."+field_name: field}})
         return True
+    
+    def update_page_field(self, page_name, field_name, field):
+        #TODO add check if field exist
+        return self.add_field(page_name, field_name, field)
         
-    def update_page(self, page_name, fields):
-        self.db.pages.update({"name": page_name},
-                             {"$set": {"fields": fields}})
+    def update_page_fields(self, page_name, fields):
+        for field_name, field in fields.items():
+            if not self.update_page_field(page_name, field_name, field):
+                return False
         return True
+

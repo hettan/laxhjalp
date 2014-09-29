@@ -7,6 +7,7 @@ class DatabaseTests(unittest.TestCase):
     def setUp(self):
         self.db = MongoDatabaseHandler()
         self.db.clear_all()
+        #self.db.clear_profiles()
         self.new_prof = Profile.dummy_profile()
         
     def test_add_profile(self):
@@ -38,14 +39,14 @@ class DatabaseTests(unittest.TestCase):
         
         self.assertNotEqual(Profile.get_profile(profile_data).address,
                             self.new_prof.address["road"])
-        """
+        
     def test_rem_profile(self):
         self.test_add_profile()
 
         self.assertTrue(self.db.rem_profile(self.new_prof.email))
         profile_data = self.db.get_profile_data(self.new_prof.email)
         self.assertEqual(profile_data, None)
-        """
+        
     def test_profile_password(self):
         self.test_add_profile()
 
@@ -69,9 +70,34 @@ class DatabaseTests(unittest.TestCase):
         
         page = self.db.get_page(page_name)
         self.assertEqual(page["name"], page_name)
-        self.assertEqual(page["fields"][0]["field"], field_name)
-        self.assertEqual(page["fields"][0]["data"]["header"], field["header"])
+        self.assertNotEqual(page["fields"][field_name], None)
+        self.assertEqual(page["fields"][field_name]["header"], field["header"])
     
+    def test_modify_page(self):
+        self.test_add_page()
+        page_name = "test"
+        field_name = "test_field"
+        field = {"header": "changed_test", "text": "changed_test", "button": "changed_test"}
+        self.assertTrue(self.db.update_page_field(page_name, field_name, field))
+        self.assertEqual(self.db.get_page(page_name)["fields"][field_name]["header"], field["header"])
+
+        
+        field_name1 = "test_field1"
+        field_name2 = "test_field2"
+        field1 = {"header": "f1", "text": "f1", "button": "f1"}
+        field2 = {"header": "f2", "text": "f2", "button": "f2"}
+        self.assertTrue(self.db.add_field(page_name, field_name1, field1))
+        self.assertTrue(self.db.add_field(page_name, field_name2, field2))
+
+        #Swap the field values
+        fields = {}
+        fields[field_name1] = field2
+        fields[field_name2] = field1        
+        self.assertTrue(self.db.update_page_fields(page_name, fields))
+        page = self.db.get_page(page_name)
+        self.assertEqual(page["fields"][field_name1], field2)
+        self.assertEqual(page["fields"][field_name2], field1)
+        
         
 if __name__ == "__main__":
     unittest.main()

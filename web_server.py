@@ -7,7 +7,9 @@ app = Flask(__name__)
 app.secret_key = 'lkfu5yDAS3dG2866645534sfsdfqFE13'
 
 db = MongoDatabaseHandler()
-
+db.clear_pages()
+db.setup_pages()
+db.setup_pages()
 def logged_in():
     return "username" in session
 
@@ -131,11 +133,12 @@ def settings():
     
 @app.route("/edit_text", methods=["GET"])
 def edit_text():
-    field = request.args.get("field")
+    page = request.args.get("page")
     user = get_user()
     if(is_admin(user)):
         args = {}
-        args["field"] = field
+        args["page"] = db.get_page(page)
+        print args
         return render_body_wrapper("change_text.html", args)
     else:
         return page_not_found()
