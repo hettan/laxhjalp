@@ -192,6 +192,18 @@ def show_interests():
     else:
         return page_not_found()
 
+@app.route("/set_interest_read", methods=["GET"])
+def set_interest_read():
+    interest_id = request.args.get("id")
+    value = request.args.get("value")
+    user = get_user()
+    if is_admin(user):
+        if db.set_interest_read(interest_id, value):
+            return "OK"
+        else:
+            return "FAILED"
+    else:
+        return page_not_found()
 
 if __name__ == "__main__":
     server_host = "0.0.0.0"

@@ -96,3 +96,8 @@ class MongoDatabaseHandler(DatabaseHandler):
         
     def get_all_unread_interests(self):
         return self.db.interests.find({"read": False})
+
+    def set_interest_field(self, _id, field, read):
+        self.db.interests.update({"_id" : ObjectId(_id)},
+                                 {"$set": {field: read}})
+        return True

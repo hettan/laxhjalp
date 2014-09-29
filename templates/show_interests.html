@@ -14,14 +14,18 @@
   <tbody>
     {% for interest in interests %}
     <tr>
-    <td>
-      {% if interest["read"] %}
-      <button class="btn btn-success btn_read">Läst</button> 
-      {% else %}
-      <button class="btn btn-primary btn_read">Oläst</button>     
-      {% endif %}
-    </td>
-    <td>
+      <td>
+        {% if interest["read"] %}
+        <button id='{{interest["_id"]}}' class="btn btn-success btn_read">
+          Läst
+        </button> 
+        {% else %}
+        <button id='{{interest["_id"]}}' class="btn btn-primary btn_read">
+          Oläst
+        </button>     
+        {% endif %}
+      </td>
+      <td>
         <a href="#">
           {{interest["email"]}}
         </a>

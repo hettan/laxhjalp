@@ -132,3 +132,16 @@ class DatabaseHandler():
 
     def get_all_unread_interests(self):
         return None
+
+    def set_interest_read(self, _id, value):
+        if value == "True":
+            value = True
+        elif value == "False":
+            value = False
+        else:
+            return False
+
+        return self.set_interest_field(_id, "read", value)
+
+    def set_interest_field(self, _id, field, value):
+        return None

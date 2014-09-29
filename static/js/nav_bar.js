@@ -1,3 +1,9 @@
+function update_interest_count(n) {
+    var count = parseInt($("#interest_count").html());
+    count += n;
+    $("#interest_count").html(count);
+};
+
 function register_dialog() { 
     BootstrapDialog.show({
         title: "Intresseanmälan",
