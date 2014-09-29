@@ -37,32 +37,35 @@ class DatabaseHandler():
         return None
 
     def add_page(self, name):
-        return None
+        return False
 
     def get_page(self, name):
         return None
-
+        
     def add_field(self, page_name, field_name, field):
-        return None
+        return False
 
     def update_page_field(self, page_name, field_name, field):
-        return None
+        return False
 
     def update_page_fields(self, page_name, fields):
-        return None
+        return False
 
     def setup_pages(self):
         self.add_page("startsida")
-        carousel = []
-        carousel.append({"header": {"type": "text", "value": "h1"}, "text": {"type": "text", "value": "texten1"},
-                         "button": {"type": "text", "value": "button text1"},
-                         "image": {"type": "image", "value": "/static/img/examle1.JPG"}})  
-        carousel.append({"header": {"type": "text", "value": "h2"}, "text": {"type": "text", "value": "texten2"},
-                         "button": {"type": "text", "value": "button text2"},
-                         "image": {"type": "image", "value": "/static/img/examle2.JPG"}})  
-        carousel.append({"header": {"type": "text", "value": "h3"}, "text": {"type": "text", "value": "texten3"},
-                         "button": {"type": "text", "value": "button text3"},
-                         "image": {"type": "image", "value": "/static/img/examle3.JPG"}})  
+        carousel = {}
+        carousel["first_slide"] = {"header": {"type": "text", "value": "h1"}, 
+                                   "text": {"type": "text", "value": "texten1"},
+                                   "button": {"type": "small-text", "value": "button text1"},
+                                   "image": {"type": "image", "value": "/static/img/examle1.JPG"}}  
+        carousel["second_slide"] = {"header": {"type": "text", "value": "h2"},
+                                    "text": {"type": "text", "value": "texten2"},
+                                    "button": {"type": "small-text", "value": "button text2"},
+                                    "image": {"type": "image", "value": "/static/img/examle2.JPG"}}  
+        carousel["third_slide"] = {"header": {"type": "text", "value": "h3"},
+                                   "text": {"type": "text", "value": "texten3"},
+                                   "button": {"type": "small-text", "value": "button text3"},
+                                   "image": {"type": "image", "value": "/static/img/examle3.JPG"}}
         
         self.add_field("startsida", "carousel", carousel)
                 

@@ -73,7 +73,9 @@ class DatabaseTests(unittest.TestCase):
         self.assertTrue(self.db.add_page(page_name))
     
         field_name = "test_field"
-        field = {"header": "test", "text": "test", "button": "test"}
+        field = {"header": {"type": "text", "value": "test"},
+                 "text": {"type":"text", "value": "test"},
+                 "button": {"type": "text", "value": "test"}}
         self.assertTrue(self.db.add_field(page_name, field_name, field))
         
         page = self.db.get_page(page_name)
@@ -84,15 +86,27 @@ class DatabaseTests(unittest.TestCase):
     def test_modify_page(self):
         self.test_add_page()
         page_name = "test"
-        field_name = "test_field"
-        field = {"header": "changed_test", "text": "changed_test", "button": "changed_test"}
-        self.assertTrue(self.db.update_page_field(page_name, field_name, field))
-        self.assertEqual(self.db.get_page(page_name)["fields"][field_name]["header"], field["header"])
+        field_name = "test_field.header"
+        #field = {"header": "changed_test", "text": "changed_test", "button": "changed_test"}
 
+        field = {"header": {"type": "text", "value": "changed_test"},
+                 "text": {"type":"text", "value": "changed_test"},
+                 "button": {"type": "text", "value": "changed_test"}}
+        value="changed_test"
+        self.assertTrue(self.db.update_page_field(page_name, field_name, value))
+        self.assertEqual(self.db.get_page(page_name)["fields"]["test_field"]["header"]["value"], value)
+        """
         field_name1 = "test_field1"
         field_name2 = "test_field2"
-        field1 = {"header": "f1", "text": "f1", "button": "f1"}
-        field2 = {"header": "f2", "text": "f2", "button": "f2"}
+        
+        field1 = {"header": {"type": "text", "value": "f1"},
+                  "text": {"type":"text", "value": "f1"},
+                  "button": {"type": "text", "value": "f1"}}
+
+        field2 = {"header": {"type": "text", "value": "f2"},
+                  "text": {"type":"text", "value": "f2"},
+                  "button": {"type": "text", "value": "f2"}}
+
         self.assertTrue(self.db.add_field(page_name, field_name1, field1))
         self.assertTrue(self.db.add_field(page_name, field_name2, field2))
 
@@ -104,7 +118,7 @@ class DatabaseTests(unittest.TestCase):
         page = self.db.get_page(page_name)
         self.assertEqual(page["fields"][field_name1], field2)
         self.assertEqual(page["fields"][field_name2], field1)
-            
+        """
     def test_interest(self):
         dummy_interest = {}
         dummy_interest["email"] = "interest@yo.yo"

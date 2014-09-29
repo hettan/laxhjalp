@@ -143,6 +143,25 @@ def edit_text():
     else:
         return page_not_found()
 
+@app.route("/update_page", methods=["POST"])
+def update_page():
+    #page_name = request.form["page_name"]
+    #field = request.form["field_name"]
+    page_name = "startsida"
+    field = "carousel.first_slide.header"
+    value = "new value yolo"
+
+    user = get_user()
+    if(is_admin(user)):
+        if db.update_page_field(page_name, field, value):
+            return "OK"
+        else:
+            return "ERROR"
+
+    else:
+        return page_not_found()
+    
+
 @app.route("/users")
 def users():
     #for profile in Profile.dummy_profiles():
