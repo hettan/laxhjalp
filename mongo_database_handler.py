@@ -1,4 +1,6 @@
 from pymongo import MongoClient
+from bson.objectid import ObjectId
+import time
 
 from database_handler import DatabaseHandler
 
@@ -13,7 +15,10 @@ class MongoDatabaseHandler(DatabaseHandler):
 
     def clear_pages(self):
         self.db.drop_collection("pages")
-    
+
+    def clear_interests(self):
+        self.db.drop_collection("interests")
+
     def email_unique(self, email):
         return self.db.profiles.find({"email":email}).count() == 0
 
@@ -28,6 +33,9 @@ class MongoDatabaseHandler(DatabaseHandler):
     def rem_profile(self, email):
         self.db.profiles.remove({"email":email})
         return True
+
+    def get_all_profiles(self):
+        return self.db.profiles.find()
 
     def get_profile_data(self, email):
         return self.db.profiles.find_one({"email":email})
@@ -75,3 +83,25 @@ class MongoDatabaseHandler(DatabaseHandler):
                 return False
         return True
 
+    def add_interest_data(self, interest):
+        current_time = time.localtime()
+        interest["added"] = time.strftime("%Y-%m-%d %H:%M:%S", current_time)
+        self.db.interests.insert(interest)
+        return True
+
+    def remove_interest(self, _id):
+        return self.db.interests.remove({"_id" :  ObjectId(_id)}) 
+
+    def get_interest(self, _id):
+        return self.db.interests.find_one({"_id" : ObjectId(_id)}) 
+
+    def get_all_interests(self):
+        return self.db.interests.find()
+        
+    def get_all_unread_interests(self):
+        return self.db.interests.find({"read": False})
+
+    def set_interest_field(self, _id, field, read):
+        self.db.interests.update({"_id" : ObjectId(_id)},
+                                 {"$set": {field: read}})
+        return True

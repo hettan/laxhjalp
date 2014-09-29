@@ -19,9 +19,11 @@ def get_user():
         user = session["username"]
     return user
 
-def render_body_wrapper(child_page, args=None):
+def render_body_wrapper(child_page, args={}):
     user = get_user()
     admin = is_admin(user)
+    if admin:
+        args["unread_interest_count"] = db.get_all_unread_interests().count()
 
     return render_template(child_page, user=user, admin=admin, args=args)
 
@@ -51,35 +53,23 @@ def contact():
 def rut_info():
     return render_body_wrapper("rut_info.html")
 
-@app.route("/register_dialog")
-def register_dialog():
-    return render_template("register.html")
+@app.route("/interest_dialog")
+def interest_dialog():
+    return render_template("interest.html")
 
 @app.route("/interest", methods=["POST"])
 def interest():
     email = request.form["email"]
     name = request.form["name"]
+    address = request.form["address"]
     phone = request.form["phone"]
-    help_with = request.form["message"]
+    help_with = request.form["help_with"]
     start_date = request.form["start_date"]
-    #insert info a new mongodb collection interests
-    return redirect("/", code=302)
 
-@app.route("/register", methods=["POST"])
-def register():
-    email = request.form["email"]
-    password = request.form["password"]
-    first_name = request.form["first_name"]
-    last_name = request.form["last_name"]
-    #return "%s %s %s %s"%(email,password,first_name,last_name)
-    profile = Profile(email, password, first_name, last_name)
-    if db.add_profile(profile):
-        session["username"] = profile.email
-        
-        msg = "Registrering klar!"
-    else:
-        msg = "Registreringen misslyckades, var god fk igen."
-    return redirect("/", code=302)
+    if db.add_interest(email, name, address, phone,
+                       help_with, start_date):
+        return redirect("/", code=302)
+    return page_not_found()
     
 def check_login(email, passw):
 #    return db.password_correct(email, passw)
@@ -123,6 +113,16 @@ def admin():
 
     return page_not_found()
 
+@app.route("/show_profile/<user>")
+def show_profile(user):
+    user_logged_in = get_user()
+    if is_admin(user_logged_in):
+        args = {}
+        args["profile"] = db.get_profile_data(user)
+        return render_body_wrapper("edit_profile.html", args)
+    else:
+        return page_not_found()
+
 @app.route("/settings")
 def settings():
     user = get_user()
@@ -143,6 +143,70 @@ def edit_text():
     else:
         return page_not_found()
 
+@app.route("/users")
+def users():
+    #for profile in Profile.dummy_profiles():
+    #    db.add_profile(profile)
+    user = get_user()
+    if(is_admin(user)):
+        args = {}
+        args["users"] = db.get_all_profiles()
+        return render_body_wrapper("users.html", args)
+    else:
+        return page_not_found()
+
+@app.route("/edit_profile", methods=["GET"])
+def edit_profile():
+    email = request.args.get("email")
+    field = request.args.get("field").strip()
+    value = request.args.get("value")
+    
+    user = get_user()
+    if(email == user or is_admin(user)):
+        if db.change_profile(email, field, value):
+            return "True"
+        else:
+            return "False"
+
+def cursor_to_list(cursor):
+    l = []
+    for elem in cursor:
+        l.append(elem)
+    return l
+
+#Unread at the top
+def sorted_interests(unread_interests, all_interests):
+    unread_interests = cursor_to_list(unread_interests)
+    all_interests = cursor_to_list(all_interests)
+    for unread in unread_interests:
+        all_interests.remove(unread)
+    return unread_interests + all_interests
+
+@app.route("/show_interests", methods=["GET"])
+def show_interests():
+    user = get_user()
+    if is_admin(user):
+        args = {}
+        unread_interests = db.get_all_unread_interests()
+        all_interests = db.get_all_interests()
+        args["interests"] = sorted_interests(unread_interests,
+                                             all_interests) 
+        return render_body_wrapper("show_interests.html", args)
+    else:
+        return page_not_found()
+
+@app.route("/set_interest_read", methods=["GET"])
+def set_interest_read():
+    interest_id = request.args.get("id")
+    value = request.args.get("value")
+    user = get_user()
+    if is_admin(user):
+        if db.set_interest_read(interest_id, value):
+            return "OK"
+        else:
+            return "FAILED"
+    else:
+        return page_not_found()
 
 if __name__ == "__main__":
     server_host = "0.0.0.0"

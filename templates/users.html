@@ -1,0 +1,47 @@
+{% extends "body_wrapper.html" %}
+{% block body %}
+<div class="container">
+  <div class="row">
+  </div>
+  <div class="row" style="height:100px;">
+  </div>
+  <div class="row featurette">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Email</th>
+          <th>Namn</th>
+          <th>Administratör</th>
+          <th>Address</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for profile in args["users"] %}
+        <tr>
+          <td>
+            <a href="show_profile/{{profile['email']}}">
+              {{profile["email"]}}
+            </a>
+          </td>
+          <td>
+            {{profile["first_name"]}} {{profile["last_name"]}}
+          </td>
+          <td>
+            {% if profile["admin"] %}
+            Ja
+            {% else %}
+            Nej
+            {% endif %}
+          </td>
+          <td>
+            {{profile["address"]["road"]}} {{profile["address"]["number"]}}
+            <br>
+            {{profile["address"]["postal"]}} {{profile["address"]["city"]}}
+          </td>
+          {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+<script src="/static/js/settings.js"></script>
+{% endblock %}

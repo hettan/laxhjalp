@@ -1,6 +1,12 @@
+function update_interest_count(n) {
+    var count = parseInt($("#interest_count").html());
+    count += n;
+    $("#interest_count").html(count);
+};
+
 function register_dialog() { 
     BootstrapDialog.show({
-        title: "Registrering",
+        title: "Intresseanmälan",
         message: function(dialog) {
             var $message = $('<div></div>');
             var pageToLoad = dialog.getData('pageToLoad');
@@ -8,7 +14,7 @@ function register_dialog() {
             return $message;
         },
         data: {
-            'pageToLoad': '/register_dialog'
+            'pageToLoad': '/interest_dialog'
         }
     });
 }

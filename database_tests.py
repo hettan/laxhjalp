@@ -60,6 +60,14 @@ class DatabaseTests(unittest.TestCase):
         self.assertTrue(self.db.password_correct(self.new_prof.email,
                                                  "new_password"))
     
+
+    def test_get_all_profiles(self):
+        profiles = Profile.dummy_profiles()
+        for profile in profiles:
+            self.assertTrue(self.db.add_profile(profile))
+
+        self.assertEqual(self.db.get_all_profiles().count(), len(profiles))    
+
     def test_add_page(self):
         page_name = "test"
         self.assertTrue(self.db.add_page(page_name))
@@ -81,7 +89,6 @@ class DatabaseTests(unittest.TestCase):
         self.assertTrue(self.db.update_page_field(page_name, field_name, field))
         self.assertEqual(self.db.get_page(page_name)["fields"][field_name]["header"], field["header"])
 
-        
         field_name1 = "test_field1"
         field_name2 = "test_field2"
         field1 = {"header": "f1", "text": "f1", "button": "f1"}
@@ -97,7 +104,23 @@ class DatabaseTests(unittest.TestCase):
         page = self.db.get_page(page_name)
         self.assertEqual(page["fields"][field_name1], field2)
         self.assertEqual(page["fields"][field_name2], field1)
+            
+    def test_interest(self):
+        dummy_interest = {}
+        dummy_interest["email"] = "interest@yo.yo"
+        dummy_interest["name"] = "Johnnny Doeyy"
+        dummy_interest["address"] = "address 1"
+        dummy_interest["phone"] = "0700311999"
+        dummy_interest["help_with"] = "help_with text"
+        dummy_interest["date"] = "2014-09-28"
         
+        self.assertTrue(self.db.add_interest_data(dummy_interest))
+        interests = self.db.get_all_interests()
+        interests_unread = self.db.get_all_unread_interests()
+        self.assertEqual(interests.count(), 1)
+        self.assertEqual(interests.count(), 1)
+        interest = self.db.get_interest(interests[0]["_id"])
+        self.assertEqual(interest["email"], dummy_interest["email"])
         
 if __name__ == "__main__":
     unittest.main()

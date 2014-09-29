@@ -1,0 +1,95 @@
+{% set ignored_fields = ["_id", "password"] %}
+
+{% macro add_fields(fields) -%}
+{% for field, value in fields.iteritems() %}
+{% if field not in ignored_fields %}
+{% if value is mapping %}
+<h3>{{field}}</h3>
+{{add_fields(value)}}
+<div style="height:50px;"></div>
+{% else %}
+<div class="setting_field input-group" style="width:300px;">
+  <span id="field_name" class="input-group-addon" style="width:100px;">
+    {{field}}
+  </span>
+  <span id="lbl_field" class="form-control">
+    {{value}}
+  </span>
+  <input id="txt_field" style="display:none;" type="text"
+         class="form-control" value="{{value}}">
+  <a id="btn_edit" href="#" class="input-group-addon">
+    <img style="max-height:80%"
+         src="/static/img/glyphicons_030_pencil.png">
+  </a>
+</div>
+{% endif %}
+{% endif %}
+{% endfor %}
+{%- endmacro %}
+
+{% extends "body_wrapper.html" %}
+{% block body %}
+
+{% set profile = args['profile'] %}
+{% set ignored_fields = ["password", "_id"] %}
+
+<div class="container">
+  <div class="row" style="height:100px;">
+  </div>
+  <h2>Profil</h2>
+  <div>
+    {{add_fields(profile)}}
+  </div>
+  
+</div>
+<script>
+$(document).ready( function() {
+    $(".setting_field").each( function() {
+        var field = $(this);
+        var lbl = $("#lbl_field", field); 
+        var input = $("#txt_field", field); 
+        $("#btn_edit",this).click( function() {
+            if(lbl.is(":visible")) {
+                lbl.hide();
+                input.show();
+                input.focus();
+                $("img",this).attr("src",
+                                   "/static/img/glyphicons_206_ok_2.png");
+            }
+            else {
+                var button_pressed = $(this);
+                button_pressed.prop("disabled", true);
+                var email = '{{profile["email"]}}';
+                var field_name = $("#field_name", field).html();
+                var value = input.val();
+                if($.trim(lbl.text()) != value) {
+                   alert(lbl.text() + "  " + value);
+                   $.get("/edit_profile?email=" + email
+                         +"&field=" + field_name + "&value=" + value,
+                         function(data) {
+                             var value = input.val();
+                             input.hide();
+                             lbl.show();
+                             lbl.text(value);
+                             $("img", button_pressed).attr("src",
+                                                "/static/img/glyphicons_030_pencil.png");
+                             button_pressed.prop("disabled", false);
+                      });
+                }
+                else {
+                   var value = input.val();
+                   input.hide();
+                   lbl.show();
+                   lbl.text(value);
+                   $("img", button_pressed).attr("src",
+                                                "/static/img/glyphicons_030_pencil.png");
+                   button_pressed.prop("disabled", false);
+                 
+                }
+            }
+        });
+    });
+});
+</script>
+<!--<script src="/static/js/settings.js"></script>--->
+{% endblock %}
