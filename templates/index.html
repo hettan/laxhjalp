@@ -1,6 +1,41 @@
+{%- macro add_carousel_slide(slide, active) %}
+{% if active %}
+<div class="item active">
+{% else %}
+<div class="item">
+{% endif %}
+  <div class="container">
+    <img src="{{slide['image']['value']}}" alt="Laddar bild..." class="img-responsive">
+    <div class="carousel-caption">
+      <h1>{{slide['header']['value']}}</h1>
+	<p>
+	  {{slide['text']['value']}}
+	</p>
+	<p>
+          <a class="btn btn-lg btn-primary register_click"
+             href="#" role="button">
+            {{slide['button']['value']}}
+          </a>
+	</p>
+    </div>	
+  </div>
+</div>					  
+{% endmacro -%}
+{%- macro add_marketing_box(marketing_box) %}
+    <div class="col-lg-4">
+      <img class="img-circle" src="{{marketing_box['image']['value']}}" alt="Laddar bild..."
+	   style="width: 140px; height: 140px;">
+      <h2>{{marketing_box['header']['value']}}</h2>
+      <p>
+	{{marketing_box['text']['value']}}
+      </p>
+      <p><a class="btn btn-default" href="#" role="button">{{marketing_box['button']['value']}} »</a></p>
+    </div>
+{% endmacro -%}
 {% set nav = "home" %}
 {% extends "body_wrapper.html" %}
 {% block body %}
+{% set car = args["page"]["fields"]["carousel"] %}
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
   <!-- Indicators -->
   <ol class="carousel-indicators">
@@ -9,9 +44,25 @@
     <li data-target="#myCarousel" data-slide-to="2" class=""></li>
   </ol>
   <div class="carousel-inner">
-    <div class="item active">
+    {{ add_carousel_slide(car['first_slide'], True) }}
+    {{ add_carousel_slide(car['second_slide'], False) }}
+    {{ add_carousel_slide(car['third_slide'], False) }}
+    <!--<div class="item active">
       <div class="container">
-	<img src="/static/img/IMG_1622.JPG" alt="First slide" class="img-responsive">
+	<img src="{{car['first_slide']['image']['value']}}" alt="First slide" class="img-responsive">
+	<div class="carousel-caption">
+          <h1>{{car['first_slide']['header']['value']}}
+          <p>
+	    {{car['first_slide']['text']['value']}}
+          </p>
+          <p>
+            <a class="btn btn-lg btn-primary register_click"
+               href="#" role="button">
+              {{car['first_slide']['button']['value']}}
+            </a>
+          </p>
+	</div>-->						  
+<!--	<img src="/static/img/IMG_1622.JPG" alt="First slide" class="img-responsive">
         <div class="carousel-caption">
           <h1>Räkna med Christin</h1>
           <p>
@@ -23,8 +74,8 @@
               Intresseanmälan
             </a>
           </p>
-        </div>
-      </div>
+        </div>-->
+    <!--  </div>
     </div>
     <div class="item">
       <div class="container">
@@ -56,7 +107,7 @@
           </p>
         </div>
       </div>
-    </div>
+    </div>-->
   </div>
   <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
     <span class="glyphicon glyphicon-chevron-left">
@@ -70,6 +121,11 @@
 <div class="row col-12" height="10px" style="background-color: grey"></div>
 <div class="container marketing">
   <div class="row">
+    {% set marketing = args['page']['fields']['marketing'] %}
+    {{ add_marketing_box(marketing['first_box']) }}
+    {{ add_marketing_box(marketing['second_box']) }}
+    {{ add_marketing_box(marketing['third_box']) }}
+    <!--
     <div class="col-lg-4">
       <img class="img-circle" src="/static/img/IMG_1602.JPG" alt="Generic placeholder image"
 	   style="width: 140px; height: 140px;">
@@ -88,7 +144,7 @@
       <h2>Någonting 3</h2>
       <p>Bla bla bla bl..addas afsdsdf dsffdgg gdsgfd.</p>
       <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
-    </div>
+    </div>-->
   </div>
 </div>
 <script src="/static/js/carousel.js"></script>

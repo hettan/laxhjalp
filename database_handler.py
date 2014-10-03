@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from passlib.apps import custom_app_context as pwd_context
 
 class DatabaseHandler():
@@ -54,21 +55,103 @@ class DatabaseHandler():
     def setup_pages(self):
         self.add_page("startsida")
         carousel = {}
-        carousel["first_slide"] = {"header": {"type": "text", "value": "h1"}, 
-                                   "text": {"type": "text", "value": "texten1"},
-                                   "button": {"type": "small-text", "value": "button text1"},
-                                   "image": {"type": "image", "value": "/static/img/examle1.JPG"}}  
-        carousel["second_slide"] = {"header": {"type": "text", "value": "h2"},
-                                    "text": {"type": "text", "value": "texten2"},
-                                    "button": {"type": "small-text", "value": "button text2"},
-                                    "image": {"type": "image", "value": "/static/img/examle2.JPG"}}  
-        carousel["third_slide"] = {"header": {"type": "text", "value": "h3"},
-                                   "text": {"type": "text", "value": "texten3"},
-                                   "button": {"type": "small-text", "value": "button text3"},
-                                   "image": {"type": "image", "value": "/static/img/examle3.JPG"}}
+        carousel["first_slide"] = {"header": {"type": "text",
+                                              "value": "Räkna med Christin"}, 
+                                   "text": {"type": "text",
+                                            "value": "Matematikundervisning på grundskole- och gymnasienivå"},
+                                   "button": {"type": "small-text", "value": "Intresseanmälan"},
+                                   "image": {"type": "image", "value": "/static/img/IMG_1622.JPG"}}  
+        carousel["second_slide"] = {"header": {"type": "text", "value": "RUT"},
+                                    "text": {"type": "text", "value": "Inget här?"},
+                                    "button": {"type": "small-text", "value": "Läs mer"},
+                                    "image": {"type": "image", "value": "/static/img/IMG_1657.JPG"}}  
+        carousel["third_slide"] = {"header": {"type": "text", "value": "Undervisning på dina vilkor!"},
+                                   "text": {"type": "text", "value": "Vi lägger upp en personlig plan."},
+                                   "button": {"type": "small-text", "value": "Läs mer"},
+                                   "image": {"type": "image", "value": "/static/img/IMG_1677.JPG"}}
+        marketing = {}
+        marketing["first_box"] = { "header": {"type": "text",
+                                            "value": "Någonting 1"}, 
+                                   "text": {"type": "text",
+                                            "value": "Tänk att matematik kan vara roligt och intressant."},
+                                   "button": {"type": "small-text", "value": "Läs mer"},
+                                   "image": {"type": "image", "value": "/static/img/IMG_1602.JPG"}}
         
+        marketing["second_box"] = { "header": {"type": "text",
+                                            "value": "Någonting 2"}, 
+                                   "text": {"type": "text",
+                                            "value": "Lite annan text här. Bla bla bla bla blaab blaa bla blaaaa"},
+                                   "button": {"type": "small-text", "value": "Läs mer"},
+                                   "image": {"type": "image", "value": "/static/img/IMG_1607.JPG"}}
+        
+        marketing["third_box"] = { "header": {"type": "text",
+                                            "value": "Någonting 3"}, 
+                                   "text": {"type": "text",
+                                            "value": "Bla bla bla bl..addas afsdsdf dsffdgg gdsgfd."},
+                                   "button": {"type": "small-text", "value": "Läs mer"},
+                                   "image": {"type": "image", "value": "/static/img/IMG_1624.JPG"}}
+
         self.add_field("startsida", "carousel", carousel)
-                
+        self.add_field("startsida", "marketing", marketing)
+
+        info_header = {"type": "text", "value": "Info"}
+        info_text = {"type": "text", "value": ("Bli säker på matematik i den kursen/området som du just "
+                                               "nu läser på grundskole- eller gymnasienivå. "
+                                               "Tycker du att det är svårt med matematik eller vill du"
+                                               " bara höja ditt betyg så är du välkommen att höra av dig."
+                                               " Undervisningen sker i Villa Holm i Rönninge med de bästa"
+                                               " förutsättningar för att du ska lära dig matematik eller"
+                                               " hemma hos dig. Jag har erfarenhet som matematiklärare "
+                                               " från grundskola och gymnasium."
+                                               " Utbildade mig för 10 år sedan på lärarhögskolan i "
+                                               "Stockholm. ")}
+        info_image = {"type": "image", "value": "/static/img/IMG_1624.JPG"}
+        self.add_page("info")
+        self.add_field("info", "header", info_header)
+        self.add_field("info", "text", info_text)
+        self.add_field("info", "image", info_image)
+
+        prices_header = {"type": "text", "value": "Priser"}
+        prices_image = {"type": "image", "value": "/static/img/calculator.png"}
+        prices_content = {"first_sub_section": {"header": {"type": "text", 
+                                                           "value": "Undervisning i Villa Holm"},
+                                                    "bullets" : {"first_bullet": 
+                                                                 {"text": {"type":"text",
+                                                                           "value": "Prova på erbjudande! 3h - 1 000kr"}},
+                                                                 "second_bullet": 
+                                                                 {"text": {"type":"text", "value":
+                                                                           "Undervisning för en person - 450kr/h"
+                                                                       }}}},
+
+                              "second_sub_section": {"header": {"type": "text", 
+                                                                "value": "Undervisning hemma hos elev"}, 
+                                                     "bullets": {"first_bullet": 
+                                                                 {"sub_bullet_1": 
+                                                                  {"text": {"type":"text", 
+                                                                            "value":"Efter godkänt RUT - 375kr/h"}},
+                                                                  "text": {"type":"text", 
+                                                                           "value":"Undervisning för en person - 650kr/h"}}}}}
+                                                              
+
+        self.add_page("priser")
+        self.add_field("priser", "header", prices_header)
+        self.add_field("priser", "content", prices_content)
+        self.add_field("priser", "image", prices_image)  
+
+
+        contact_header = {"type": "text", "value": "Kontakt"}
+        contact_image = {"type": "image", "value": "/static/img/IMG_1577.JPG"}
+        contact_info = {"name": {"type": "small-text", "value": "Christin Holm"}, 
+                        "mail": {"type": "small-text", "value": "holmchristin@gmail.com"},
+                        "phone": {"type": "small-text", "value": "070-73 11 954"},
+                        "bankgiro":  {"type": "small-text", "value": "344-7778"},
+                        "org_nr":  {"type": "small-text", "value": "556941-7305"}}
+                        
+        self.add_page("kontakt")
+        self.add_field("kontakt", "header", contact_header)
+        self.add_field("kontakt", "image", contact_image)
+        self.add_field("kontakt", "info", contact_info)
+
     @staticmethod
     def password_hash(password):
         return pwd_context.encrypt(password)

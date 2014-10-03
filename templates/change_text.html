@@ -7,12 +7,12 @@
     <label style="width:100px;"><h3>{{key}}</h3></label>
     <div class="input-group">
       {% if type == "text" %}
-      <textarea class="form-control" rows="4" name="{{key}}" style="width:500px;"> {{value["value"]}}</textarea>
+      <textarea id="input_{{parent_field}}{{key}}" class="form-control" rows="4" name="{{key}}" style="width:500px;">{{value["value"]}}</textarea>
       {% elif type in ["small-text", "image"] %}
-      <input class="form-control" type="text" name="{{key}}" style="width:200px;" value='{{value["value"]}}' />
+      <input id="input_{{parent_field}}{{key}}" class="form-control" type="text" name="{{key}}" style="width:200px;" value='{{value["value"]}}' />
       {% endif %}
-      <button class="btn btn-primary" style="position:absolute;bottom:0;" 
-	      onclick="update_field('{{args['page']['name']}}', '{{parent_field}}{{key}}', '{{value['value']}}')">
+      <button class="btn btn-primary edit_btn" style="position:absolute;bottom:0;display:none;" 
+	      data-page="{{args['page']['name']}}", data-field="{{parent_field}}{{key}}">
 	Spara
       </button>
     </div>
@@ -20,10 +20,9 @@
 </div>
 {% else %}
 <h2>{{key}}</h3><br>
-<form class="form-inline">
-  {% set parent_field = parent_field+key+"." %}
-  {{ add_field(value, parent_field) }}
-</form>
+
+{{ add_field(value, parent_field+key+".") }}
+
 {% endif %}
 {% endfor %}
 {%- endmacro %}
@@ -40,8 +39,9 @@
     <div class="col-md-12">
       <h1>Ändra {{args['page']['name']}}</h1>
       {{ add_field(args['page']['fields'], '') }}
-      <button type="submit" class="btn btn-lg btn-primary pull-right">Spara</button>
     </div>
   </div>
 </div>
+<script src="/static/js/change_text.js"></script>
 {% endblock %}
+

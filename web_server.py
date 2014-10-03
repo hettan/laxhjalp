@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from flask import Flask, render_template, request, session, redirect
 
 from mongo_database_handler import MongoDatabaseHandler
@@ -7,9 +9,6 @@ app = Flask(__name__)
 app.secret_key = 'lkfu5yDAS3dG2866645534sfsdfqFE13'
 
 db = MongoDatabaseHandler()
-db.clear_pages()
-db.setup_pages()
-db.setup_pages()
 
 def logged_in():
     return "username" in session
@@ -36,19 +35,27 @@ def body_wrapper_message(msg):
 
 @app.route("/")
 def index():
-    return render_body_wrapper("index.html")
+    args = {}
+    args["page"] = db.get_page("startsida")
+    return render_body_wrapper("index.html", args)
 
 @app.route("/info")
 def info():
-    return render_body_wrapper("about.html")
+    args = {}
+    args["page"] = db.get_page("info") 
+    return render_body_wrapper("about.html", args)
 
 @app.route("/prices")
 def prices():
-    return render_body_wrapper("prices.html")
+    args = {}
+    args["page"] = db.get_page("priser") 
+    return render_body_wrapper("prices.html", args)
 
 @app.route("/contact")
 def contact():
-    return render_body_wrapper("contact.html")
+    args = {}
+    args["page"] = db.get_page("kontakt") 
+    return render_body_wrapper("contact.html", args)
 
 @app.route("/rut_info")
 def rut_info():
@@ -144,11 +151,12 @@ def edit_text():
     else:
         return page_not_found()
 
-@app.route("/update_page", methods=["POST"])
+@app.route("/update_page", methods=["GET"])
 def update_page():
-    page = request.form["page"]
-    field = request.form["field"]
-    value = request.form["value"]
+    page = request.args.get("page")
+    field = request.args.get("field")
+    value = request.args.get("value")
+    print page + field + value
 #    page_name = "startsida"
  #   field = "carousel.first_slide.header"
   #  value = "new value yolo"
@@ -156,8 +164,10 @@ def update_page():
     user = get_user()
     if(is_admin(user)):
         if db.update_page_field(page, field, value):
+            print "OK"
             return "OK"
         else:
+            print "ERROR"
             return "ERROR"
 
     else:
@@ -229,6 +239,16 @@ def set_interest_read():
     else:
         return page_not_found()
 
+@app.route("/reset_pages")
+def reset_pages():
+    user = get_user()
+    if is_admin(user):
+        db.clear_pages()
+        db.setup_pages()
+        return "OK"
+    return page_not_found()
+
+    
 if __name__ == "__main__":
     server_host = "0.0.0.0"
     app.run(debug=True,host=server_host)

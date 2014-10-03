@@ -78,7 +78,6 @@ class MongoDatabaseHandler(DatabaseHandler):
         return True
 
     def replace_field(self, fields, field, value):
-        print "replace_field(%s, %s, %s)" % ( str(fields), str(field), str(value))
         if len(field) == 0:
             return None
         
@@ -88,12 +87,9 @@ class MongoDatabaseHandler(DatabaseHandler):
                 print "Found %s"%f_name
             
                 if len(field) == 1:
-                    print "Final field, setting value"
                     fields[f_name]["value"] = value
-                    print "fields = %s"%str(fields)
                     return fields
                 else:
-                    print "Nested value %s left."%str(field[1:])
                     found = self.replace_field(f_value, field[1:], value)
                     if found:
                         fields[f_name] = found

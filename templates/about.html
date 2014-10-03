@@ -1,4 +1,4 @@
-{% set nav = "about" %}
+{% set nav = args['page']['name'] %}
 {% extends "body_wrapper.html" %}
 {% block body %}
 <div class="container">
@@ -8,7 +8,10 @@
   </div>
   <div class="row featurette">
     <div class="col-md-7">
-      <h2>Info</h2>
+      {% set fields = args['page']['fields'] %}
+      <h2>{{fields['header']['value']}}</h2>
+      {{fields['text']['value']}}
+      <!--<h2>Info</h2>
       Bli säker på matematik i den kursen/området som du  just nu läser på grundskole- eller gymnasienivå. 
       <br>
       Tycker du att det är svårt med matematik eller vill du bara höja ditt betyg så är du välkommen att höra av dig. <br>
@@ -16,13 +19,13 @@
       <br><br>
       Jag har erfarenhet som matematiklärare från  grundskola och gymnasium.
       <br>
-      Utbildade mig för 10 år sedan på lärarhögskolan i Stockholm.
+      Utbildade mig för 10 år sedan på lärarhögskolan i Stockholm.-->
     </div>
     <div class="col-md-5">
       <div class="row">      
       </div>
       <img class="featurette-image img-responsive"
-           src="static/img/IMG_1624.JPG">
+	   src="{{fields['image']['value']}}">
     </div>
   </div>
 </div>

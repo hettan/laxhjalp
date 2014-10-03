@@ -1,6 +1,7 @@
 {% set nav = "contact" %}
 {% extends "body_wrapper.html" %}
 {% block body %}
+{% set fields = args['page']['fields'] %}
 <div class="container">
   <div class="row">
   </div>
@@ -8,20 +9,20 @@
   </div>
   <div class="row featurette">
     <div class="col-md-7">
-      <h2>Kontakt</h2>
+      <h2>{{fields['header']['value']}}</h2>
       <br>
-      <img class="img-responsive" src="static/img/IMG_1577.JPG"
+      <img class="img-responsive" src="{{fields['image']['value']}}"
 	   height="126px" width="192px">
-      <h3>Christin Holm</h3>
+      <h3>{{fields['info']['name']['value']}}</h3>
       <b>mail:</b> 
-      <a href="mailto:holmchristin@gmail.com?Subject=Räkna%20med%20christin:%20" target="_top">
-        holmchristin@gmail.com
+      <a href="mailto:{{fields['info']['mail']['value']}}?Subject=Räkna%20med%20christin:%20" target="_top">
+        {{fields['info']['mail']['value']}}
       </a>
-      <br><b>tel:</b> 0707311954      
+      <br><b>tel:</b> {{fields['info']['phone']['value']}}      
       
       <div style="margin-top:40px">
-	Bankgiro: 344-7778<br>
-	Org.nr: 556941-7305<br>
+	Bankgiro: {{fields['info']['bankgiro']['value']}}<br>
+	Org.nr: {{fields['info']['org_nr']['value']}}<br>
 	Innehar F-skattebevis
       </div>
     </div>
