@@ -4,7 +4,7 @@ function update_interest_count(n) {
     $("#interest_count").html(count);
 };
 
-function register_dialog() { 
+function interest_dialog() { 
     BootstrapDialog.show({
         title: "Intresseanmälan",
         message: function(dialog) {
@@ -58,5 +58,5 @@ $(document).ready(function() {
         });
     });
 
-   $(".register_click").click(register_dialog);
+    $(".register_click").click(interest_dialog);
 });

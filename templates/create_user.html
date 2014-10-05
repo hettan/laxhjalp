@@ -1,0 +1,79 @@
+<link rel="stylesheet" href="/static/css/bootstrapValidator.min.css"/>
+<script type="text/javascript" src="/static/js/bootstrapValidator.min.js"></script>
+
+<!-- Change the "action" attribute to your back-end URL -->
+<form id="create_user_form" method="post"
+      class="form-horizontal" action="/create_user">
+  <div class="form-group">
+    <label class="col-lg-3 control-label">Email</label>
+    <div class="col-lg-5">
+      <input type="text" class="form-control" name="email" />
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label class="col-lg-3 control-label">Lösenord</label>
+    <div class="col-lg-5">
+      <input type="password" class="form-control" name="password" />
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label class="col-lg-3 control-label">Förnamn</label>
+    <div class="col-lg-5">
+      <input type="text" class="form-control" name="first_name" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-lg-3 control-label">Efternamn</label>
+    <div class="col-lg-5">
+      <input type="text" class="form-control" name="last_name" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-lg-3 control-label">Address</label>
+    <div class="col-lg-5">
+      <input type="text" class="form-control" name="road" />
+    </div>
+    <div class="col-lg-2">
+      <input type="text" class="form-control" name="road_number"
+             placeholder="Num"/>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-lg-3 control-label"></label>
+    <div class="col-lg-3">
+      <input type="text" class="form-control" name="postal" 
+             placeholder="Postnummer"/>
+    </div>
+    <div class="col-lg-4">
+      <input type="text" class="form-control" name="city" 
+             placeholder="Ort"/>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-lg-3 control-label">Telefon</label>
+    <div class="col-lg-5">
+      <input type="text" class="form-control" name="phone" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-lg-3 control-label">Admin</label>
+    <div class="col-lg-5">
+      <input type="checkbox" name="admin"/>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-lg-9 col-lg-offset-3">
+      <!-- Do NOT use name="submit" or id="submit" for the Submit button -->
+      <button type="submit" class="btn btn-default">Lägg till</button>
+    </div>
+  </div>
+</form>
+<script src="/static/js/create_user.js"></script>
+

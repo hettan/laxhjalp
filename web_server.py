@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.secret_key = 'lkfu5yDAS3dG2866645534sfsdfqFE13'
 
 db = MongoDatabaseHandler()
-
+    
 def logged_in():
     return "username" in session
 
@@ -18,7 +18,7 @@ def get_user():
     if logged_in():
         user = session["username"]
     return user
-2
+
 def render_body_wrapper(child_page, args={}):
     user = get_user()
     admin = is_admin(user)
@@ -64,6 +64,10 @@ def rut_info():
 @app.route("/interest_dialog")
 def interest_dialog():
     return render_template("interest.html")
+
+@app.route("/add_user_dialog")
+def add_user_dialog():
+    return render_template("create_user.html")
 
 @app.route("/interest", methods=["POST"])
 def interest():
@@ -239,6 +243,32 @@ def set_interest_read():
     else:
         return page_not_found()
 
+@app.route("/create_user", methods=["POST"])
+def create_user():
+    print "here"
+    user = get_user()
+    if is_admin(user):
+        email = request.form["email"]
+        password = request.form["password"]
+        first_name = request.form["first_name"]
+        last_name = request.form["last_name"]
+        road = request.form["road"]
+        road_number = request.form["road_number"]
+        postal = request.form["postal"]
+        city = request.form["city"]
+        phone = request.form["phone"]
+        admin = ("admin" in request.form)
+        print "admin=%s"%admin
+        profile = Profile(email, password, first_name, last_name)
+        profile.add_address(road, road_number, postal, city)
+        if admin:
+            profile.set_admin()
+
+        if db.add_profile(profile):
+            return users()
+
+    return page_not_found()
+
 @app.route("/reset_pages")
 def reset_pages():
     user = get_user()
@@ -251,4 +281,5 @@ def reset_pages():
     
 if __name__ == "__main__":
     server_host = "0.0.0.0"
-    app.run(debug=True,host=server_host)
+    app.run(debug=True, host=server_host)
+    reset_pages()
