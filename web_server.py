@@ -59,7 +59,9 @@ def contact():
 
 @app.route("/rut_info")
 def rut_info():
-    return render_body_wrapper("rut_info.html")
+    args = {}
+    args["page"] = db.get_page("rut_info") 
+    return render_body_wrapper("rut_info.html", args)
 
 @app.route("/interest_dialog")
 def interest_dialog():

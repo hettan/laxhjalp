@@ -52,7 +52,35 @@ class DatabaseHandler():
     def update_page_fields(self, page_name, fields):
         return False
 
+    def add_subfield(self, page_name, field_path, field_name, field):
+        return False
+
+    def add_carousel_links(self):
+        link1 = {"type": "link", "value": "#"}
+        link2 = {"type": "link", "value": "/rut_info"}
+        link3 = {"type": "link", "value": "/info"}
+        
+        if self.add_subfield("startsida", "carousel.first_slide", "link", link1):
+            print "Added link to first slide"
+
+        if self.add_subfield("startsida", "carousel.second_slide", "link", link2):
+            print "Added link to second slide"
+
+        if self.add_subfield("startsida", "carousel.third_slide", "link", link3):
+            print "Added link third slide"
+
+    def add_rut_info_page(self):
+        info_header = {"type": "text", "value": "RUT"}
+        info_text = {"type": "text", "value": ("Från den 1 januari 2013 har förälder eller annan vårdnadshavare, som har underhållsskyldighet för sitt barn, rätt till skattereduktion för arbetskostnad för hjälp med läxor och annat skolarbete för barn som är elev i grundskola och gymnasieskola förutsatt att arbetet utförts i barnets bostad. Kommunal vuxenutbildning omfattas inte av reglerna om skattereduktion för hjälp med läxläsning och annat skolarbete.")}
+        info_image = {"type": "image", "value": "/static/img/IMG_1624.JPG"}
+        self.add_page("rut_info")
+        self.add_field("rut_info", "header", info_header)
+        self.add_field("rut_info", "text", info_text)
+        self.add_field("rut_info", "image", info_image)
+
+
     def setup_pages(self):
+        self.add_rut_info_page()
         self.add_page("startsida")
         carousel = {}
         carousel["first_slide"] = {"header": {"type": "text",
@@ -93,7 +121,7 @@ class DatabaseHandler():
 
         self.add_field("startsida", "carousel", carousel)
         self.add_field("startsida", "marketing", marketing)
-
+        self.add_carousel_links()
         info_header = {"type": "text", "value": "Info"}
         info_text = {"type": "text", "value": ("Bli säker på matematik i den kursen/området som du just "
                                                "nu läser på grundskole- eller gymnasienivå. "

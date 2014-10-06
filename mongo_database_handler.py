@@ -119,6 +119,32 @@ class MongoDatabaseHandler(DatabaseHandler):
                 return False
         return True
 
+    def add_subfield(self, page_name, field_path, field_name, field):
+        page = self.get_page(page_name)
+        
+        field_path = field_path.split(".")
+        page["fields"] = self.add_field_json(page["fields"], field_path, field_name, field)
+        if page:
+            self.update_page(page)
+            return True
+        else:
+            return False
+            
+                
+    def add_field_json(self, json_obj, field_path, field_name, field):
+        print "field_path %s" % field_path
+        print json_obj
+        if field_path[0] in json_obj:
+            if len(field_path) == 1:
+                json_obj[field_path[0]][field_name] = field
+            else:
+                print "JSON OBJ[field]"
+                print json_obj[field_path[0]]
+                json_obj[field_path[0]] = self.add_field_json(json_obj[field_path[0]], field_path[1:], field_name, field)
+            return json_obj
+        return None
+        
+        
     def add_interest_data(self, interest):
         current_time = time.localtime()
         interest["added"] = time.strftime("%Y-%m-%d %H:%M:%S", current_time)

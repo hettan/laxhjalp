@@ -12,8 +12,9 @@
 	  {{slide['text']['value']}}
 	</p>
 	<p>
-          <a class="btn btn-lg btn-primary register_click"
-             href="#" role="button">
+          <a class="btn btn-lg btn-primary 
+          {% if slide['link']['value'] == '#' %}register_click{% endif %}"
+             href="{{slide['link']['value']}}" role="button">
             {{slide['button']['value']}}
           </a>
 	</p>
