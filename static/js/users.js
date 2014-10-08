@@ -15,5 +15,5 @@ function add_user_dialog() {
 }
 
 $(document).ready(function() {
-    $(".add_user_click").click(add_user_dialog());
+    $(".add_user_click").click(add_user_dialog);
 });

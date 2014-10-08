@@ -86,8 +86,8 @@ def interest():
     return page_not_found()
     
 def check_login(email, passw):
-#    return db.password_correct(email, passw)
-    return email == "admin" and passw == "admin"
+    return db.password_correct(email, passw)
+#    return email == "admin" and passw == "admin"
 
 @app.route("/login", methods=["POST"])
 def login():
@@ -141,7 +141,10 @@ def show_profile(user):
 def settings():
     user = get_user()
     if len(user) > 0:
-        return render_body_wrapper("settings.html")
+        args = {}
+        args["profile"] = db.get_profile_data(user)
+        print args["profile"]
+        return render_body_wrapper("edit_profile.html", args)
 
     return page_not_found()
     
@@ -247,7 +250,6 @@ def set_interest_read():
 
 @app.route("/create_user", methods=["POST"])
 def create_user():
-    print "here"
     user = get_user()
     if is_admin(user):
         email = request.form["email"]
@@ -260,7 +262,7 @@ def create_user():
         city = request.form["city"]
         phone = request.form["phone"]
         admin = ("admin" in request.form)
-        print "admin=%s"%admin
+        
         profile = Profile(email, password, first_name, last_name)
         profile.add_address(road, road_number, postal, city)
         if admin:
@@ -269,6 +271,18 @@ def create_user():
         if db.add_profile(profile):
             return users()
 
+    return page_not_found()
+
+@app.route("/change_password_dialog")
+def change_password_dialog():
+    return render_body_wrapper("change_password.html")
+
+@app.route("/change_password", methods=["POST"])
+def change_password():
+    user = get_user()
+    new_password = request.form["new_password"]
+    old_password = request.form["old_password"]
+    print "new_p = %s, old_p=%s old_p"
     return page_not_found()
 
 @app.route("/reset_pages")
