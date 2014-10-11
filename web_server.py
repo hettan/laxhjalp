@@ -165,7 +165,7 @@ def update_page():
     page = request.args.get("page")
     field = request.args.get("field")
     value = request.args.get("value")
-    print page + field + value
+#    print page + field + value
 #    page_name = "startsida"
  #   field = "carousel.first_slide.header"
   #  value = "new value yolo"
