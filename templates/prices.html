@@ -9,26 +9,28 @@
   </div>
   <div class="row featurette">
     <div class="col-md-7">
-      <h2>{{fields['header']['value']}}</h2>
-      <h3{{fields['content']['first_sub_section']['header']['value']}}</h3>
+      <h2>{{fields['header']['value']|safe}}</h2>
+      <h3>
+        {{fields['content']['first_sub_section']['header']['value']|safe}}
+      </h3>
       <p class="lead">
         <ul>
           <li>
-	    {{fields['content']['first_sub_section']['bullets']['first_bullet']['text']['value']}}
+	    {{fields['content']['first_sub_section']['bullets']['first_bullet']['text']['value']|safe}}
           </li>
           <li>
-            {{fields['content']['first_sub_section']['bullets']['second_bullet']['text']['value']}}
+            {{fields['content']['first_sub_section']['bullets']['second_bullet']['text']['value']|safe}}
           </li>
         </ul>
       </p>
-      <h3>{{fields['content']['second_sub_section']['header']['value']}}</h3>
+      <h3>{{fields['content']['second_sub_section']['header']['value']|safe}}</h3>
       <p class="lead">
         <ul>
           <li>
-	    {{fields['content']['second_sub_section']['bullets']['first_bullet']['text']['value']}}
+	    {{fields['content']['second_sub_section']['bullets']['first_bullet']['text']['value']|safe}}
             <ul>
               <li>
-		{{fields['content']['second_sub_section']['bullets']['first_bullet']['sub_bullet_1']['text']['value']}}
+		{{fields['content']['second_sub_section']['bullets']['first_bullet']['sub_bullet_1']['text']['value']|safe}}
                 </li>
             </ul>
           </li>
@@ -43,7 +45,7 @@
       <div class="row">
       </div>
       
-        <img class="featurette-image img-responsive" src="/static/img/calculator.png">
+        <img class="featurette-image img-responsive" src="{{fields['image']['value']}}">
       
       <!--<img class="featurette-image img-responsive" data-src="holder.js/500x500/auto" alt="Generic placeholder image">-->
     </div>

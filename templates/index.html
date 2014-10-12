@@ -7,15 +7,15 @@
   <div class="container">
     <img src="{{slide['image']['value']}}" alt="Laddar bild..." class="img-responsive">
     <div class="carousel-caption">
-      <h1>{{slide['header']['value']}}</h1>
+      <h1>{{slide['header']['value']|safe}}</h1>
 	<p>
-	  {{slide['text']['value']}}
+	  {{slide['text']['value']|safe}}
 	</p>
 	<p>
           <a class="btn btn-lg btn-primary 
           {% if slide['link']['value'] == '#' %}register_click{% endif %}"
              href="{{slide['link']['value']}}" role="button">
-            {{slide['button']['value']}}
+            {{slide['button']['value']|safe}}
           </a>
 	</p>
     </div>	
@@ -26,9 +26,9 @@
     <div class="col-lg-4">
       <img class="img-circle" src="{{marketing_box['image']['value']}}" alt="Laddar bild..."
 	   style="width: 140px; height: 140px;">
-      <h2>{{marketing_box['header']['value']}}</h2>
+      <h2>{{marketing_box['header']['value']|safe}}</h2>
       <p>
-	{{marketing_box['text']['value']}}
+	{{marketing_box['text']['value']|safe}}
       </p>
       <!--<p><a class="btn btn-default" href="#" role="button">{{marketing_box['button']['value']}} »</a></p>-->
     </div>

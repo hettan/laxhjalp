@@ -9,8 +9,8 @@
   <div class="row featurette">
     <div class="col-md-7">
       {% set fields = args['page']['fields'] %}
-      <h2>{{fields['header']['value']}}</h2>
-      {{fields['text']['value']}}
+      <h2>{{fields['header']['value']|safe}}</h2>
+      {{fields['text']['value']|safe}}
       <!--<h2>Info</h2>
       Bli säker på matematik i den kursen/området som du  just nu läser på grundskole- eller gymnasienivå. 
       <br>

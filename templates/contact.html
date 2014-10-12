@@ -9,20 +9,20 @@
   </div>
   <div class="row featurette">
     <div class="col-md-7">
-      <h2>{{fields['header']['value']}}</h2>
+      <h2>{{fields['header']['value']|safe}}</h2>
       <br>
       <img class="img-responsive" src="{{fields['image']['value']}}"
 	   height="126px" width="192px">
-      <h3>{{fields['info']['name']['value']}}</h3>
+      <h3>{{fields['info']['name']['value']|safe}}</h3>
       <b>mail:</b> 
       <a href="mailto:{{fields['info']['mail']['value']}}?Subject=Räkna%20med%20christin:%20" target="_top">
-        {{fields['info']['mail']['value']}}
+        {{fields['info']['mail']['value']|safe}}
       </a>
-      <br><b>tel:</b> {{fields['info']['phone']['value']}}      
+      <br><b>tel:</b> {{fields['info']['phone']['value']|safe}}      
       
       <div style="margin-top:40px">
-	Betalning: {{fields['info']['bankgiro']['value']}}<br>
-	Företaget: {{fields['info']['org_nr']['value']}}<br>
+	Betalning: {{fields['info']['bankgiro']['value']|safe}}<br>
+	Företaget: {{fields['info']['org_nr']['value']|safe}}<br>
 	Innehar F-skattebevis
       </div>
     </div>

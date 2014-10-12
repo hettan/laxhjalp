@@ -39,15 +39,15 @@ def index():
     args["page"] = db.get_page("startsida")
     return render_body_wrapper("index.html", args)
 
-def format_field_br(field):
+def format_fields_br(field):
     if "type" in field.keys():
         field_type = field["type"]
         if field_type == "text":
-            
+            field["value"]
 
 def format_page_br(page):
-    for key, value in page.iteritems:
-        if key
+    page["fields"] = format_fields_br(page["fields"])
+    return page
 
 @app.route("/info")
 def info():
@@ -165,7 +165,6 @@ def edit_text():
     if(is_admin(user)):
         args = {}
         args["page"] = db.get_page(page)
-        print args
         return render_body_wrapper("change_text.html", args)
     else:
         return page_not_found()
@@ -175,6 +174,7 @@ def update_page():
     page = request.args.get("page")
     field = request.args.get("field")
     value = request.args.get("value")
+    
 #    print page + field + value
 #    page_name = "startsida"
  #   field = "carousel.first_slide.header"
