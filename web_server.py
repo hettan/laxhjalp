@@ -39,6 +39,16 @@ def index():
     args["page"] = db.get_page("startsida")
     return render_body_wrapper("index.html", args)
 
+def format_field_br(field):
+    if "type" in field.keys():
+        field_type = field["type"]
+        if field_type == "text":
+            
+
+def format_page_br(page):
+    for key, value in page.iteritems:
+        if key
+
 @app.route("/info")
 def info():
     args = {}
@@ -111,8 +121,8 @@ def is_admin(user):
     return len(user) > 0
 
 @app.errorhandler(404)
-def page_not_found(e=None):
-    return render_template("404.html"), 404
+def page_not_found(e=None): 
+   return render_template("404.html"), 404
 
 @app.route("/reset")
 def reset(email):
